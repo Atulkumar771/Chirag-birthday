@@ -12,17 +12,17 @@ display:flex;
 justify-content:center;
 align-items:center;
 flex-direction:column;
-background:#f8c8dc;
+background:linear-gradient(135deg,#ffd1dc,#ffe6f0);
 font-family:Arial;
 overflow:hidden;
 }
 
-/* Animated Card */
+/* Card */
 .card{
 position:relative;
-width:320px;
+width:340px;
 height:200px;
-background:#fff;
+background:white;
 border-radius:20px;
 display:flex;
 justify-content:center;
@@ -32,48 +32,77 @@ box-shadow:0 10px 30px rgba(0,0,0,0.1);
 overflow:hidden;
 }
 
-/* Lines */
+/* Animated Lines */
 .line{
 position:absolute;
 width:3px;
 height:0;
 background:#ff4081;
 top:20px;
-animation:grow 1s forwards;
+animation:grow 3s infinite;
 }
 
 .line.left{left:30px;}
 .line.right{right:30px;}
 
 @keyframes grow{
-to{height:160px;}
+0%{height:0;}
+30%{height:160px;}
+70%{height:160px;}
+100%{height:0;}
 }
 
-/* Heart */
+/* Glowing Heart */
 .heart{
-font-size:40px;
-opacity:0;
-transform:scale(0);
-animation:pop 1s 1s forwards;
+width:50px;
+height:50px;
+background:#ff4d6d;
+position:relative;
+transform:rotate(-45deg);
+animation:beat 1.2s infinite;
+box-shadow:0 0 20px #ff4d6d;
+margin-bottom:15px;
 }
 
-@keyframes pop{
-50%{transform:scale(1.3);}
-100%{transform:scale(1);opacity:1;}
+.heart:before,
+.heart:after{
+content:"";
+width:50px;
+height:50px;
+background:#ff4d6d;
+border-radius:50%;
+position:absolute;
 }
 
-/* Text */
+.heart:before{
+top:-25px;
+left:0;
+}
+
+.heart:after{
+left:25px;
+top:0;
+}
+
+@keyframes beat{
+0%{transform:scale(1) rotate(-45deg);}
+50%{transform:scale(1.15) rotate(-45deg);}
+100%{transform:scale(1) rotate(-45deg);}
+}
+
+/* Text Animation */
 .text{
-margin-top:15px;
 font-size:22px;
 color:#c2185b;
 opacity:0;
-animation:slideIn 1s 2s forwards;
+animation:textLoop 3s infinite;
 }
 
-@keyframes slideIn{
-from{transform:translateY(20px);opacity:0;}
-to{transform:translateY(0);opacity:1;}
+@keyframes textLoop{
+0%{opacity:0;transform:translateY(20px);}
+30%{opacity:1;transform:translateY(0);}
+70%{opacity:1;}
+100%{opacity:0;transform:translateY(-20px);}
 }
 
 /* Buttons */
@@ -86,6 +115,7 @@ background:#ff4081;
 color:white;
 font-size:14px;
 cursor:pointer;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
 }
 </style>
 </head>
@@ -95,11 +125,12 @@ cursor:pointer;
 <div class="line left"></div>
 <div class="line right"></div>
 
-<div class="heart">❤️</div>
+<div class="heart"></div>
+
 <div class="text">Happy Birthday Chirag</div>
 </div>
 
-<button onclick="toggleMusic()">🎵 Play Music</button>
+<button onclick="toggleMusic()">🎵 Play / Pause Music</button>
 <button onclick="window.location.href='gallery.html'">
 See Pictures 📸
 </button>
