@@ -1,4 +1,4 @@
-here<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,21 +12,7 @@ background:linear-gradient(135deg,#ffd1dc,#ffe6f0);
 overflow-x:hidden;
 }
 
-/* ===== RADIO MUSIC BUTTON ===== */
-.radio{
-position:fixed;
-top:20px;
-right:20px;
-width:70px;
-cursor:pointer;
-z-index:5;
-transition:transform 0.3s ease;
-}
-.radio:hover{
-transform:scale(1.1);
-}
-
-/* ===== FADE SCROLL ===== */
+/* Fade animation */
 .fade{
 opacity:0;
 transform:translateY(40px);
@@ -59,7 +45,7 @@ from{text-shadow:0 0 10px #ff4081;}
 to{text-shadow:0 0 25px #ff1493;}
 }
 
-/* ===== CAKE ===== */
+/* Cake */
 .cake{
 position:relative;
 width:160px;
@@ -105,7 +91,7 @@ transform:translateX(-50%);
 box-shadow:0 5px 10px rgba(0,0,0,0.2);
 }
 
-/* Candle + Flame */
+/* Candle */
 .candle{
 position:absolute;
 top:-55px;
@@ -132,7 +118,7 @@ from{transform:translateX(-50%) scale(1);}
 to{transform:translateX(-50%) scale(1.2);}
 }
 
-/* ===== SECTIONS ===== */
+/* Sections */
 .section{
 padding:80px 20px;
 text-align:center;
@@ -155,37 +141,71 @@ margin-right:auto;
 line-height:1.6;
 }
 
-/* ===== FINAL ===== */
+/* Final */
 .final{
-min-height:80vh;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
+padding:60px 20px;
 text-align:center;
-padding:40px;
 background:linear-gradient(135deg,#ffc2d1,#ffe6f0);
 }
 
 .final h2{
 color:#c2185b;
-font-size:28px;
 }
 
-.final p{
-max-width:500px;
-font-size:18px;
-color:#444;
-line-height:1.7;
+/* Radio Section */
+.radio-section{
+text-align:center;
+padding:40px 20px;
+}
+
+.radio-section img{
+width:120px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.radio-section img:hover{
+transform:scale(1.1);
+}
+
+.play-btn{
+margin-top:15px;
+padding:10px 20px;
+border:none;
+border-radius:20px;
+background:#ff4081;
+color:white;
+cursor:pointer;
+}
+
+/* Secret Code */
+.secret-box{
+margin-top:40px;
+}
+
+.secret-box input{
+padding:8px;
+border-radius:10px;
+border:1px solid #ccc;
+text-align:center;
+}
+
+.secret-box button{
+padding:8px 15px;
+border:none;
+border-radius:10px;
+background:#c2185b;
+color:white;
+cursor:pointer;
+margin-left:10px;
 }
 </style>
 </head>
 <body>
 
-<img src="radio.png" class="radio" onclick="toggleMusic()">
 <audio id="bgMusic" src="loveyou.mp3"></audio>
 
-<div class="hero fade">
+<div class="hero fade show"> <!-- show added so it appears instantly -->
 <div class="cake">
 <div class="plate"></div>
 <div class="layer"></div>
@@ -205,7 +225,7 @@ line-height:1.7;
 
 <div class="section fade">
 <img src="chirag2.jpg">
-<div class="wish">Through late-night voice chats and endless laughter, we built something rare.</div>
+<div class="wish">Through voice chats and victories, we built something rare.</div>
 </div>
 
 <div class="section fade">
@@ -231,19 +251,28 @@ line-height:1.7;
 <div class="final fade">
 <h2>Always My Brother</h2>
 <p>
-From strangers on Discord to brothers in life,  
-we’ve grown, laughed, fought, won and survived together.  
-
-No matter how life changes,  
+From strangers on Discord to brothers in life —  
 this bond stays unshaken.  
-
-Happy Birthday, Chirag.  
-Stay strong. Stay real. Stay legendary. 👑🔥
+Happy Birthday, Chirag. 👑🔥
 </p>
 </div>
 
+<!-- Radio Section -->
+<div class="radio-section fade">
+<img src="radio.png" onclick="toggleMusic()">
+<br>
+<button class="play-btn" onclick="toggleMusic()">Tap to Play Music 🎵</button>
+</div>
+
+<!-- Secret Code -->
+<div class="secret-box fade">
+<p>Enter Secret Code 🔐</p>
+<input type="password" id="codeInput" placeholder="Enter code">
+<button onclick="checkCode()">Unlock</button>
+</div>
+
 <script>
-/* Fade scroll */
+/* Scroll Fade */
 const fades=document.querySelectorAll('.fade');
 window.addEventListener('scroll',()=>{
 fades.forEach(el=>{
@@ -259,16 +288,21 @@ const music=document.getElementById("bgMusic");
 let playing=false;
 function toggleMusic(){
 if(!playing){
-music.volume=0;
 music.play();
-let fade=setInterval(()=>{
-if(music.volume<1){music.volume+=0.05;}
-else{clearInterval(fade);}
-},200);
 playing=true;
 }else{
 music.pause();
 playing=false;
+}
+}
+
+/* Secret Code */
+function checkCode(){
+const code=document.getElementById("codeInput").value;
+if(code==="1802"){
+window.location.href="secret.html";
+}else{
+alert("Wrong Code 👀");
 }
 }
 </script>
