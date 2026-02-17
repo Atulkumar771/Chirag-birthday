@@ -36,8 +36,12 @@ body {
 </div>
 
 <script>
-const targetDate = new Date("February 18, 2026 00:00:00").getTime();
 
+const TEST_MODE = true; 
+// 🔥 Keep true while testing
+// 🔥 Change to false on 17th night before sending
+
+const targetDate = new Date("February 18, 2026 00:00:00").getTime();
 const timerEl = document.getElementById("timer");
 
 const interval = setInterval(() => {
@@ -45,7 +49,8 @@ const interval = setInterval(() => {
   const now = new Date().getTime();
   const distance = targetDate - now;
 
-  if (distance <= 0) {
+  // Redirect if midnight OR test mode enabled
+  if (distance <= 0 || TEST_MODE) {
     clearInterval(interval);
     window.location.href = "celebration.html";
   }
@@ -59,6 +64,7 @@ const interval = setInterval(() => {
                     + seconds + "s ";
 
 }, 1000);
+
 </script>
 
 </body>
