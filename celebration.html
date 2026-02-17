@@ -1,1 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Chirag 🎉</title>
 
+<style>
+body {
+  margin: 0;
+  background: black;
+  color: white;
+  font-family: Arial;
+  text-align: center;
+  overflow: hidden;
+}
+
+h1 {
+  margin-top: 20vh;
+  font-size: 40px;
+  color: #00e5ff;
+  text-shadow: 0 0 20px #00e5ff;
+}
+
+.level {
+  font-size: 24px;
+  color: gold;
+  margin-top: 10px;
+}
+
+button {
+  margin-top: 30px;
+  padding: 10px 20px;
+  font-size: 18px;
+  border-radius: 10px;
+  border: none;
+  background: #ff4d6d;
+  color: white;
+}
+
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+</style>
+</head>
+<body>
+
+<h1>🎉 Happy 27th Birthday Chirag 🎂</h1>
+<div class="level">🔥 LEVEL 27 UNLOCKED 🔥</div>
+
+<button onclick="goGallery()">See Memories 📸</button>
+
+<audio id="bgMusic" src="loveyou.mp3" autoplay loop></audio>
+
+<canvas id="fireworks"></canvas>
+
+<script>
+function goGallery(){
+  window.location.href = "gallery.html";
+}
+
+/* Fireworks */
+const canvas = document.getElementById("fireworks");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let particles = [];
+
+setInterval(()=>{
+  createExplosion(Math.random()*canvas.width,
+                  Math.random()*canvas.height/2);
+},800);
+
+function createExplosion(x,y){
+  for(let i=0;i<50;i++){
+    particles.push({
+      x,y,
+      dx:(Math.random()-0.5)*5,
+      dy:(Math.random()-0.5)*5,
+      life:100
+    });
+  }
+}
+
+function animate(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  particles.forEach((p,i)=>{
+    p.x+=p.dx;
+    p.y+=p.dy;
+    p.life--;
+    ctx.fillStyle="hsl("+Math.random()*360+",100%,50%)";
+    ctx.fillRect(p.x,p.y,3,3);
+    if(p.life<=0)particles.splice(i,1);
+  });
+  requestAnimationFrame(animate);
+}
+animate();
+</script>
+
+</body>
+</html>
