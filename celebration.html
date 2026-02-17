@@ -7,46 +7,60 @@
 <style>
 body{
 margin:0;
-min-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-flex-direction:column;
-background:linear-gradient(135deg,#ffd1dc,#ffe6f0);
 font-family:Arial;
+background:linear-gradient(135deg,#ffd1dc,#ffe6f0);
 overflow-x:hidden;
-position:relative;
+}
+
+/* ===== FADE IN ON SCROLL ===== */
+.fade{
+opacity:0;
+transform:translateY(40px);
+transition:1s ease;
+}
+.fade.show{
+opacity:1;
+transform:translateY(0);
 }
 
 /* ===== BACKGROUND BALLOONS ===== */
 .bg-balloon{
-position:absolute;
+position:fixed;
 width:60px;
 height:80px;
 border-radius:50% 50% 45% 45%;
-opacity:0.25;
-filter:blur(1px);
-animation:float 18s linear infinite;
+opacity:0.2;
+animation:float 25s linear infinite;
 z-index:0;
 }
-
 @keyframes float{
-0%{transform:translateY(0);}
+0%{transform:translateY(100vh);}
 100%{transform:translateY(-120vh);}
 }
 
-/* ===== CARD ===== */
-.card{
-position:relative;
-z-index:2;
-width:380px;
-background:white;
-border-radius:25px;
-padding:30px 20px;
-box-shadow:0 15px 40px rgba(0,0,0,0.15);
+/* ===== HERO ===== */
+.hero{
+min-height:100vh;
 display:flex;
 flex-direction:column;
+justify-content:center;
 align-items:center;
+position:relative;
+z-index:2;
+text-align:center;
+}
+
+/* Glowing Title */
+.title{
+font-size:32px;
+font-weight:bold;
+color:#c2185b;
+text-shadow:0 0 20px #ff4081;
+animation:glow 2s infinite alternate;
+}
+@keyframes glow{
+from{text-shadow:0 0 10px #ff4081;}
+to{text-shadow:0 0 25px #ff1493;}
 }
 
 /* ===== CAKE ===== */
@@ -55,15 +69,14 @@ position:relative;
 width:160px;
 height:140px;
 margin-bottom:20px;
-animation:drop 6s infinite;
+animation:drop 4s ease infinite;
 }
-
 @keyframes drop{
-0%{transform:translateY(-300px);}
-40%{transform:translateY(0);}
-55%{transform:translateY(-20px);}
+0%{transform:translateY(-200px);}
+50%{transform:translateY(0);}
+60%{transform:translateY(-15px);}
 70%{transform:translateY(0);}
-100%{transform:translateY(-300px);}
+100%{transform:translateY(0);}
 }
 
 .layer{
@@ -74,16 +87,8 @@ border-radius:10px;
 position:absolute;
 bottom:0;
 }
-
-.layer.middle{
-bottom:35px;
-background:#ffb3c6;
-}
-
-.layer.top{
-bottom:70px;
-background:#ffc2d1;
-}
+.layer.middle{bottom:35px;background:#ffb3c6;}
+.layer.top{bottom:70px;background:#ffc2d1;}
 
 .icing{
 position:absolute;
@@ -106,143 +111,191 @@ transform:translateX(-50%);
 box-shadow:0 5px 10px rgba(0,0,0,0.2);
 }
 
+/* Candle + Flame */
 .candle{
 position:absolute;
-top:-50px;
+top:-55px;
 left:50%;
 transform:translateX(-50%);
-font-size:28px;
-font-weight:bold;
-color:#ff4081;
-text-shadow:0 0 15px #ff4081;
+width:6px;
+height:30px;
+background:white;
+border-radius:3px;
 }
 
-/* ===== SPLIT TEXT ===== */
-.text-wrapper{
-overflow:hidden;
-height:45px;
-margin-bottom:20px;
+.flame{
+position:absolute;
+top:-75px;
+left:50%;
+transform:translateX(-50%);
+width:14px;
+height:20px;
+background:radial-gradient(circle,yellow 0%,orange 60%,red 100%);
+border-radius:50%;
+animation:flicker 0.8s infinite alternate;
+}
+@keyframes flicker{
+from{transform:translateX(-50%) scale(1);}
+to{transform:translateX(-50%) scale(1.2);}
 }
 
-.text{
-font-size:26px;
-font-weight:bold;
-color:#c2185b;
-white-space:nowrap;
+/* ===== IMAGE SECTIONS ===== */
+.section{
+padding:80px 20px;
+text-align:center;
+position:relative;
+z-index:2;
 }
 
-.left-part{
-display:inline-block;
-transform:translateX(-150%);
-animation:slideLeft 6s infinite;
+.section img{
+width:90%;
+max-width:400px;
+border-radius:20px;
+box-shadow:0 10px 30px rgba(0,0,0,0.2);
+transition:transform 0.5s ease;
 }
 
-.right-part{
-display:inline-block;
-transform:translateX(150%);
-animation:slideRight 6s infinite;
-}
-
-@keyframes slideLeft{
-0%{transform:translateX(-150%);}
-55%{transform:translateX(0);}
-85%{transform:translateX(0);}
-100%{transform:translateX(-150%);}
-}
-
-@keyframes slideRight{
-0%{transform:translateX(150%);}
-55%{transform:translateX(0);}
-85%{transform:translateX(0);}
-100%{transform:translateX(150%);}
-}
-
-/* ===== PHOTO GRID ===== */
-.gallery{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:10px;
-width:100%;
-margin-top:10px;
-}
-
-.gallery img{
-width:100%;
-border-radius:10px;
-transition:transform 0.3s ease;
-}
-
-.gallery img:hover{
+.section img:hover{
 transform:scale(1.05);
 }
 
-/* ===== BUTTON ===== */
-button{
+.wish{
 margin-top:20px;
-padding:10px 20px;
+font-size:18px;
+color:#444;
+max-width:400px;
+margin-left:auto;
+margin-right:auto;
+}
+
+/* ===== FINAL MESSAGE ===== */
+.final{
+min-height:80vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding:40px;
+background:linear-gradient(135deg,#ffc2d1,#ffe6f0);
+}
+
+.final h2{
+color:#c2185b;
+font-size:26px;
+}
+
+.final p{
+max-width:500px;
+font-size:18px;
+color:#444;
+}
+
+/* ===== MUSIC BUTTON ===== */
+.music-btn{
+position:fixed;
+top:20px;
+right:20px;
+padding:10px 15px;
 border:none;
-border-radius:25px;
+border-radius:20px;
 background:#ff4081;
 color:white;
-font-size:14px;
 cursor:pointer;
-box-shadow:0 5px 15px rgba(0,0,0,0.1);
-z-index:2;
+z-index:3;
 }
 </style>
 </head>
 <body>
 
-<!-- BACKGROUND BALLOONS -->
+<button class="music-btn" onclick="toggleMusic()">🎵 Music</button>
+<audio id="bgMusic" src="loveyou.mp3"></audio>
+
 <script>
 const colors=["#ff8fab","#ffb3c6","#ffc2d1","#ffa6c1"];
-for(let i=0;i<6;i++){
+for(let i=0;i<5;i++){
 let b=document.createElement("div");
 b.className="bg-balloon";
 b.style.left=Math.random()*100+"vw";
 b.style.background=colors[Math.floor(Math.random()*colors.length)];
-b.style.animationDuration=(15+Math.random()*10)+"s";
+b.style.animationDuration=(20+Math.random()*10)+"s";
 document.body.appendChild(b);
 }
 </script>
 
-<div class="card">
-
+<div class="hero fade">
 <div class="cake">
 <div class="plate"></div>
 <div class="layer"></div>
 <div class="layer middle"></div>
 <div class="layer top"></div>
 <div class="icing"></div>
-<div class="candle">27</div>
+<div class="candle"></div>
+<div class="flame"></div>
+</div>
+<div class="title">Happy 27th Birthday Chirag 🎂</div>
 </div>
 
-<div class="text-wrapper">
-<div class="text">
-<span class="left-part">Happy Birthday</span>
-<span class="right-part"> Chirag 🎂</span>
-</div>
-</div>
-
-<div class="gallery">
+<div class="section fade">
 <img src="chirag1.jpg">
+<div class="wish">From Discord strangers to real brothers — destiny works beautifully.</div>
+</div>
+
+<div class="section fade">
 <img src="chirag2.jpg">
+<div class="wish">Every late-night voice chat built a bond that distance can’t break.</div>
+</div>
+
+<div class="section fade">
 <img src="chirag3.jpg">
+<div class="wish">From PUBG to BGMI — you were never just a teammate.</div>
+</div>
+
+<div class="section fade">
 <img src="chirag4.jpg">
+<div class="wish">You valued me when I doubted myself. That changed me.</div>
+</div>
+
+<div class="section fade">
 <img src="chirag5.jpg">
+<div class="wish">You pushed me to grow stronger — not just in games, but in life.</div>
+</div>
+
+<div class="section fade">
 <img src="chirag6.jpg">
+<div class="wish">More than best friend. More than words. My brother forever. 👑</div>
 </div>
 
+<div class="final fade">
+<h2>💌 Always Proud of You</h2>
+<p>
+No matter where life takes us,  
+no matter how busy things get,  
+our bond stays unshaken.  
+
+6–7 years and counting.  
+Still talking. Still laughing. Still playing.  
+
+Happy Birthday, my brother.  
+Stay legendary. 👑🔥
+</p>
 </div>
-
-<button onclick="toggleMusic()">🎵 Play / Pause Music</button>
-
-<audio id="bgMusic" src="loveyou.mp3"></audio>
 
 <script>
+/* Fade on scroll */
+const fades=document.querySelectorAll('.fade');
+window.addEventListener('scroll',()=>{
+fades.forEach(el=>{
+const rect=el.getBoundingClientRect();
+if(rect.top<window.innerHeight-100){
+el.classList.add('show');
+}
+});
+});
+
+/* Music */
 const music=document.getElementById("bgMusic");
 let playing=false;
-
 function toggleMusic(){
 if(!playing){
 music.volume=0;
