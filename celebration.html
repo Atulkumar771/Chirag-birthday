@@ -12,7 +12,6 @@ background:linear-gradient(135deg,#ffd1dc,#ffe6f0);
 overflow-x:hidden;
 }
 
-/* Fade Animation */
 .fade{
 opacity:0;
 transform:translateY(40px);
@@ -23,7 +22,6 @@ opacity:1;
 transform:translateY(0);
 }
 
-/* HERO SECTION */
 .hero{
 min-height:100vh;
 display:flex;
@@ -90,8 +88,6 @@ left:50%;
 transform:translateX(-50%);
 box-shadow:0 5px 10px rgba(0,0,0,0.2);
 }
-
-/* Candle */
 .candle{
 position:absolute;
 top:-55px;
@@ -118,13 +114,11 @@ from{transform:translateX(-50%) scale(1);}
 to{transform:translateX(-50%) scale(1.2);}
 }
 
-/* Radio Section */
 .radio-section{
 text-align:center;
 margin-top:-60px;
 margin-bottom:60px;
 }
-
 .radio-section img{
 width:120px;
 cursor:pointer;
@@ -134,48 +128,35 @@ transition:0.3s;
 transform:scale(1.1);
 }
 
-.play-text{
-margin-top:10px;
-color:#444;
-}
-
-/* Content Sections */
 .section{
 padding:80px 20px;
 text-align:center;
 }
-
 .section img{
 width:90%;
 max-width:400px;
 border-radius:20px;
 box-shadow:0 10px 30px rgba(0,0,0,0.2);
 }
-
 .wish{
 margin-top:20px;
 font-size:19px;
 color:#444;
 max-width:450px;
-margin-left:auto;
-margin-right:auto;
-line-height:1.6;
+margin:auto;
 }
 
-/* Secret Box */
 .secret-box{
 display:none;
 text-align:center;
 padding:40px 20px;
 }
-
 .secret-box input{
 padding:8px;
 border-radius:10px;
 border:1px solid #ccc;
 text-align:center;
 }
-
 .secret-box button{
 padding:8px 15px;
 border:none;
@@ -189,7 +170,7 @@ margin-left:10px;
 </head>
 <body>
 
-<audio id="bgMusic" src="loveyou.mp3"></audio>
+<audio id="bgMusic" src="loveyou.mp3" loop></audio>
 
 <div class="hero fade show">
 <div class="cake">
@@ -201,16 +182,14 @@ margin-left:10px;
 <div class="candle"></div>
 <div class="flame"></div>
 </div>
-<div class="title">Happy Birthday Chirag👑</div>
+<div class="title">Happy Birthday Chirag 👑</div>
 </div>
 
-<!-- RADIO -->
 <div class="radio-section fade show">
 <img src="radio.png" onclick="toggleMusic()">
-<div class="play-text">Tap the radio to play music 🎵</div>
+<p>Tap the radio to play music 🎵</p>
 </div>
 
-<!-- MEMORY SECTIONS -->
 <div class="section fade">
 <img src="chirag1.jpg">
 <div class="wish">Some friendships are temporary. Ours became family.</div>
@@ -226,31 +205,15 @@ margin-left:10px;
 <div class="wish">You didn’t just play beside me — you stood beside me.</div>
 </div>
 
-<div class="section fade">
-<img src="chirag4.jpg">
-<div class="wish">When I doubted myself, you reminded me who I was.</div>
-</div>
-
-<div class="section fade">
-<img src="chirag5.jpg">
-<div class="wish">7 years later — still my teammate. Still my brother.</div>
-</div>
-
-<div class="section fade">
-<img src="chirag6.jpg">
-<div class="wish">Legends level up. Kings evolve. Today, you rise higher.</div>
-</div>
-
-<!-- SECRET CODE -->
 <div class="secret-box" id="secretBox">
-<p>Only real ones know the code 🔐</p>
+<p>Enter the 4 digit code 🔐</p>
 <input type="password" id="codeInput" placeholder="Enter code">
 <button onclick="checkCode()">Unlock</button>
 </div>
 
 <script>
 
-/* Scroll Fade */
+/* Fade */
 const fades=document.querySelectorAll('.fade');
 window.addEventListener('scroll',()=>{
 fades.forEach(el=>{
@@ -261,40 +224,29 @@ el.classList.add('show');
 });
 });
 
-/* MUSIC SYSTEM */
+/* Music System */
 const music = document.getElementById("bgMusic");
 let playing = false;
 
 function toggleMusic(){
     if(!playing){
+        music.currentTime = 0;
         music.play();
         playing = true;
-
-        // Reveal secret after music starts
-        document.getElementById("secretBox").style.display = "block";
+        document.getElementById("secretBox").style.display="block";
     } else {
         music.pause();
         playing = false;
     }
 }
 
-// Resume music if returning
-window.onload = function(){
-    const savedTime = localStorage.getItem("musicTime");
-    if(savedTime){
-        music.currentTime = parseFloat(savedTime);
-    }
-}
-
-// Save music time continuously
-music.addEventListener("timeupdate", ()=>{
+window.addEventListener("beforeunload", function(){
     localStorage.setItem("musicTime", music.currentTime);
 });
 
-/* SECRET CODE */
+/* Secret Code */
 function checkCode(){
-const code=document.getElementById("codeInput").value;
-if(code==="1802"){
+if(document.getElementById("codeInput").value==="1802"){
 window.location.href="secret.html";
 }else{
 alert("Wrong Code 👀");
