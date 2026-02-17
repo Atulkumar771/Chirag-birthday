@@ -17,11 +17,27 @@ font-family:Arial;
 overflow:hidden;
 }
 
+/* Floating Balloons */
+.balloon{
+position:absolute;
+bottom:-100px;
+width:40px;
+height:50px;
+background:#ff8fab;
+border-radius:50%;
+animation:float 8s linear infinite;
+opacity:0.6;
+}
+@keyframes float{
+from{transform:translateY(0);}
+to{transform:translateY(-120vh);}
+}
+
 /* Card */
 .card{
 position:relative;
 width:360px;
-height:260px;
+height:300px;
 background:white;
 border-radius:20px;
 display:flex;
@@ -35,63 +51,83 @@ overflow:hidden;
 /* Cake Drop */
 .cake{
 position:relative;
-width:100px;
-height:80px;
+width:120px;
+height:100px;
 margin-bottom:20px;
-animation:drop 5s infinite;
+animation:drop 6s infinite;
 }
 
 @keyframes drop{
-0%{transform:translateY(-250px);}
+0%{transform:translateY(-300px);}
 40%{transform:translateY(0);}
-55%{transform:translateY(-15px);}
+55%{transform:translateY(-20px);}
 70%{transform:translateY(0);}
-100%{transform:translateY(-250px);}
+100%{transform:translateY(-300px);}
 }
 
+/* Cake Layers slice-by-slice */
 .layer{
-width:100px;
-height:40px;
+width:120px;
+height:30px;
 background:#ff8fab;
 border-radius:10px;
 position:absolute;
 bottom:0;
+opacity:0;
+animation:layerAppear 6s infinite;
+}
+
+.layer.middle{
+bottom:30px;
+background:#ffb3c6;
+animation-delay:0.2s;
 }
 
 .layer.top{
-width:80px;
-height:30px;
-background:#ffb3c6;
-bottom:40px;
-left:10px;
-border-radius:10px;
+bottom:60px;
+background:#ffc2d1;
+animation-delay:0.4s;
 }
 
+@keyframes layerAppear{
+0%,35%{opacity:0;}
+40%,90%{opacity:1;}
+100%{opacity:0;}
+}
+
+/* Candle 27 */
 .candle{
-width:10px;
-height:25px;
-background:#fff;
-position:absolute;
-top:-35px;
-left:45px;
-border-radius:3px;
-}
-
-.flame{
-width:10px;
-height:10px;
-background:orange;
-border-radius:50%;
 position:absolute;
 top:-45px;
 left:45px;
-animation:flicker 1s infinite alternate;
-box-shadow:0 0 10px orange;
+font-size:22px;
+font-weight:bold;
+color:#ff4081;
+opacity:0;
+animation:candleAppear 6s infinite;
 }
 
-@keyframes flicker{
-0%{transform:scale(1);}
-100%{transform:scale(1.3);}
+@keyframes candleAppear{
+0%,45%{opacity:0;}
+55%,90%{opacity:1;}
+100%{opacity:0;}
+}
+
+/* Fireworks */
+.firework{
+position:absolute;
+width:5px;
+height:5px;
+background:gold;
+border-radius:50%;
+animation:explode 6s infinite;
+}
+
+@keyframes explode{
+0%,50%{opacity:0;}
+60%{opacity:1; transform:scale(1);}
+70%{transform:scale(5); opacity:0;}
+100%{opacity:0;}
 }
 
 /* Split Text */
@@ -99,7 +135,6 @@ box-shadow:0 0 10px orange;
 position:relative;
 overflow:hidden;
 height:40px;
-margin-top:10px;
 }
 
 .text{
@@ -109,36 +144,35 @@ color:#c2185b;
 white-space:nowrap;
 }
 
-/* Split halves */
 .left-part{
 display:inline-block;
 transform:translateX(-150%);
-animation:slideLeft 5s infinite;
+animation:slideLeft 6s infinite;
 }
 
 .right-part{
 display:inline-block;
 transform:translateX(150%);
-animation:slideRight 5s infinite;
+animation:slideRight 6s infinite;
 }
 
 @keyframes slideLeft{
 0%{transform:translateX(-150%);}
-40%{transform:translateX(0);}
-70%{transform:translateX(0);}
+55%{transform:translateX(0);}
+85%{transform:translateX(0);}
 100%{transform:translateX(-150%);}
 }
 
 @keyframes slideRight{
 0%{transform:translateX(150%);}
-40%{transform:translateX(0);}
-70%{transform:translateX(0);}
+55%{transform:translateX(0);}
+85%{transform:translateX(0);}
 100%{transform:translateX(150%);}
 }
 
 /* Buttons */
 button{
-margin-top:20px;
+margin-top:15px;
 padding:10px 20px;
 border:none;
 border-radius:25px;
@@ -152,13 +186,24 @@ box-shadow:0 5px 15px rgba(0,0,0,0.1);
 </head>
 <body>
 
+<!-- Balloons -->
+<script>
+for(let i=0;i<8;i++){
+let b=document.createElement("div");
+b.className="balloon";
+b.style.left=Math.random()*100+"vw";
+b.style.animationDuration=(6+Math.random()*4)+"s";
+document.body.appendChild(b);
+}
+</script>
+
 <div class="card">
 
 <div class="cake">
-<div class="layer top"></div>
 <div class="layer"></div>
-<div class="candle"></div>
-<div class="flame"></div>
+<div class="layer middle"></div>
+<div class="layer top"></div>
+<div class="candle">27</div>
 </div>
 
 <div class="text-wrapper">
@@ -190,6 +235,16 @@ music.pause();
 playing=false;
 }
 }
+
+/* Fireworks spawn */
+setInterval(()=>{
+let f=document.createElement("div");
+f.className="firework";
+f.style.left=Math.random()*100+"vw";
+f.style.top=Math.random()*50+"vh";
+document.body.appendChild(f);
+setTimeout(()=>f.remove(),2000);
+},2000);
 </script>
 
 </body>
