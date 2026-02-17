@@ -2,148 +2,171 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chirag Birthday Live Age 🎂</title>
+<title>Chirag Birthday Countdown 🎂</title>
 
 <style>
 body{
 margin:0;
 height:100vh;
 display:flex;
+flex-direction:column;
 justify-content:center;
 align-items:center;
-flex-direction:column;
 background:linear-gradient(135deg,#ffe6f0,#ffd1dc);
 font-family:Arial;
-text-align:center;
-color:#c2185b;
 overflow:hidden;
 }
 
+/* Container */
 .container{
-background:white;
-padding:35px;
-border-radius:25px;
-box-shadow:0 15px 40px rgba(0,0,0,0.15);
-max-width:400px;
-animation:fadeIn 1.5s ease;
+display:flex;
+gap:20px;
 }
 
-@keyframes fadeIn{
-from{opacity:0; transform:translateY(30px);}
-to{opacity:1; transform:translateY(0);}
-}
-
-h1{
-margin-bottom:20px;
-}
-
-.age-box{
-margin-top:20px;
-font-size:18px;
-line-height:1.8;
-color:#444;
-}
-
-.big-age{
-font-size:22px;
+/* Bubble */
+.bubble{
+width:110px;
+height:110px;
+border-radius:50%;
+display:flex;
+justify-content:center;
+align-items:center;
+color:white;
+font-size:32px;
 font-weight:bold;
-color:#ff1493;
-margin-top:10px;
+position:relative;
+overflow:hidden;
+box-shadow:0 0 25px rgba(0,0,0,0.2);
 }
 
+/* Different colors */
+.hours{background:radial-gradient(circle,#ff8fab,#ff1493);}
+.minutes{background:radial-gradient(circle,#7b2ff7,#f107a3);}
+.seconds{background:radial-gradient(circle,#00c6ff,#0072ff);}
+
+/* Flip number */
+.number{
+position:absolute;
+transition:transform 0.6s;
+backface-visibility:hidden;
+}
+
+.flip{
+animation:flipAnim 0.6s ease;
+}
+
+@keyframes flipAnim{
+0%{transform:rotateX(0deg);}
+100%{transform:rotateX(360deg);}
+}
+
+.label{
+margin-top:12px;
+text-align:center;
+font-weight:bold;
+color:#c2185b;
+}
+
+/* Unlock text */
 .unlock{
-margin-top:25px;
+margin-top:40px;
+font-size:28px;
 font-weight:bold;
-font-size:24px;
 color:#ff1493;
 opacity:0;
-transition:1.5s ease;
+transition:1.5s;
 }
 </style>
 </head>
 <body>
 
 <div class="container">
-<h1>🎂 Live Age Counter 🎂</h1>
 
-<div class="big-age" id="mainAge"></div>
+<div>
+<div class="bubble hours">
+<div class="number" id="hours">00</div>
+</div>
+<div class="label">HOURS</div>
+</div>
 
-<div class="age-box" id="ageDetails"></div>
+<div>
+<div class="bubble minutes">
+<div class="number" id="minutes">00</div>
+</div>
+<div class="label">MINUTES</div>
+</div>
+
+<div>
+<div class="bubble seconds">
+<div class="number" id="seconds">00</div>
+</div>
+<div class="label">SECONDS</div>
+</div>
+
+</div>
 
 <div class="unlock" id="unlockText">
-🎉 He is 27 Now! 🎉
-</div>
+🎉 HE IS 27 NOW! 🎉
 </div>
 
 <script>
 
-const birthDate = new Date("February 18, 1999 00:00:00");
 const targetDate = new Date("February 18, 2026 00:00:00");
 
-const mainAge = document.getElementById("mainAge");
-const ageDetails = document.getElementById("ageDetails");
-const unlockText = document.getElementById("unlockText");
+const hoursEl=document.getElementById("hours");
+const minutesEl=document.getElementById("minutes");
+const secondsEl=document.getElementById("seconds");
+const unlockText=document.getElementById("unlockText");
 
-function updateAge(){
+let prevH="", prevM="", prevS="";
 
-const now = new Date();
+function updateCountdown(){
 
-// Calculate full years
-let years = now.getFullYear() - birthDate.getFullYear();
+const now=new Date();
+const distance=targetDate-now;
 
-// Create last birthday date
-let lastBirthday = new Date(
-    birthDate.getFullYear() + years,
-    birthDate.getMonth(),
-    birthDate.getDate()
-);
-
-// If birthday hasn’t occurred yet this year
-if(now < lastBirthday){
-    years--;
-    lastBirthday = new Date(
-        birthDate.getFullYear() + years,
-        birthDate.getMonth(),
-        birthDate.getDate()
-    );
-}
-
-// Time since last birthday
-let diff = now - lastBirthday;
-
-let days = Math.floor(diff / (1000*60*60*24));
-diff %= (1000*60*60*24);
-
-let hours = Math.floor(diff / (1000*60*60));
-diff %= (1000*60*60);
-
-let minutes = Math.floor(diff / (1000*60));
-diff %= (1000*60);
-
-let seconds = Math.floor(diff / 1000);
-
-// Display
-mainAge.innerHTML = years + " Years";
-
-ageDetails.innerHTML =
-days + " Days<br>" +
-hours + " Hours<br>" +
-minutes + " Minutes<br>" +
-seconds + " Seconds";
-
-// At midnight unlock
-if(now >= targetDate){
-unlockText.style.opacity = "1";
-
+if(distance<=0){
+unlockText.style.opacity="1";
 setTimeout(()=>{
 window.location.href="celebration.html";
 },4000);
+return;
+}
+
+let hours=Math.floor((distance%(1000*60*60*24))/(1000*60*60));
+let minutes=Math.floor((distance%(1000*60*60))/(1000*60));
+let seconds=Math.floor((distance%(1000*60))/(1000));
+
+hours=String(hours).padStart(2,'0');
+minutes=String(minutes).padStart(2,'0');
+seconds=String(seconds).padStart(2,'0');
+
+/* Flip animation only when value changes */
+if(hours!==prevH){
+hoursEl.textContent=hours;
+hoursEl.classList.add("flip");
+setTimeout(()=>hoursEl.classList.remove("flip"),600);
+prevH=hours;
+}
+
+if(minutes!==prevM){
+minutesEl.textContent=minutes;
+minutesEl.classList.add("flip");
+setTimeout(()=>minutesEl.classList.remove("flip"),600);
+prevM=minutes;
+}
+
+if(seconds!==prevS){
+secondsEl.textContent=seconds;
+secondsEl.classList.add("flip");
+setTimeout(()=>secondsEl.classList.remove("flip"),600);
+prevS=seconds;
 }
 
 }
 
-setInterval(updateAge,1000);
-updateAge();
+setInterval(updateCountdown,1000);
+updateCountdown();
 
 </script>
 
