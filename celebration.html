@@ -17,7 +17,22 @@ font-family:Arial;
 overflow:hidden;
 }
 
-/* Floating Balloons */
+/* Sparkles */
+.sparkle{
+position:absolute;
+width:4px;
+height:4px;
+background:white;
+border-radius:50%;
+opacity:0.6;
+animation:twinkle 3s infinite alternate;
+}
+@keyframes twinkle{
+from{opacity:0.2;}
+to{opacity:1;}
+}
+
+/* Balloons */
 .balloon{
 position:absolute;
 bottom:-100px;
@@ -26,7 +41,7 @@ height:50px;
 background:#ff8fab;
 border-radius:50%;
 animation:float 8s linear infinite;
-opacity:0.6;
+cursor:pointer;
 }
 @keyframes float{
 from{transform:translateY(0);}
@@ -37,37 +52,38 @@ to{transform:translateY(-120vh);}
 .card{
 position:relative;
 width:360px;
-height:300px;
+height:320px;
 background:white;
 border-radius:20px;
 display:flex;
 justify-content:center;
 align-items:center;
 flex-direction:column;
-box-shadow:0 10px 30px rgba(0,0,0,0.1);
+box-shadow:0 10px 30px rgba(0,0,0,0.15);
 overflow:hidden;
 }
 
-/* Cake Drop */
+/* Cake */
 .cake{
 position:relative;
-width:120px;
-height:100px;
+width:140px;
+height:120px;
 margin-bottom:20px;
 animation:drop 6s infinite;
+filter:drop-shadow(0 10px 15px rgba(0,0,0,0.2));
 }
 
 @keyframes drop{
-0%{transform:translateY(-300px);}
+0%{transform:translateY(-350px);}
 40%{transform:translateY(0);}
 55%{transform:translateY(-20px);}
 70%{transform:translateY(0);}
-100%{transform:translateY(-300px);}
+100%{transform:translateY(-350px);}
 }
 
-/* Cake Layers slice-by-slice */
+/* Cake layers */
 .layer{
-width:120px;
+width:140px;
 height:30px;
 background:#ff8fab;
 border-radius:10px;
@@ -98,11 +114,13 @@ animation-delay:0.4s;
 /* Candle 27 */
 .candle{
 position:absolute;
-top:-45px;
-left:45px;
-font-size:22px;
+top:-50px;
+left:50%;
+transform:translateX(-50%);
+font-size:26px;
 font-weight:bold;
 color:#ff4081;
+text-shadow:0 0 15px #ff4081;
 opacity:0;
 animation:candleAppear 6s infinite;
 }
@@ -113,26 +131,35 @@ animation:candleAppear 6s infinite;
 100%{opacity:0;}
 }
 
+/* Confetti */
+.confetti{
+position:absolute;
+width:6px;
+height:6px;
+background:gold;
+animation:confettiFall 2s linear forwards;
+}
+@keyframes confettiFall{
+from{transform:translateY(0);}
+to{transform:translateY(100vh);}
+}
+
 /* Fireworks */
 .firework{
 position:absolute;
 width:5px;
 height:5px;
-background:gold;
+background:orange;
 border-radius:50%;
-animation:explode 6s infinite;
+animation:explode 2s linear forwards;
 }
-
 @keyframes explode{
-0%,50%{opacity:0;}
-60%{opacity:1; transform:scale(1);}
-70%{transform:scale(5); opacity:0;}
-100%{opacity:0;}
+0%{opacity:1; transform:scale(1);}
+100%{opacity:0; transform:scale(6);}
 }
 
 /* Split Text */
 .text-wrapper{
-position:relative;
 overflow:hidden;
 height:40px;
 }
@@ -186,17 +213,6 @@ box-shadow:0 5px 15px rgba(0,0,0,0.1);
 </head>
 <body>
 
-<!-- Balloons -->
-<script>
-for(let i=0;i<8;i++){
-let b=document.createElement("div");
-b.className="balloon";
-b.style.left=Math.random()*100+"vw";
-b.style.animationDuration=(6+Math.random()*4)+"s";
-document.body.appendChild(b);
-}
-</script>
-
 <div class="card">
 
 <div class="cake">
@@ -228,7 +244,13 @@ let playing=false;
 
 function toggleMusic(){
 if(!playing){
+music.volume=0;
 music.play();
+let fade=setInterval(()=>{
+if(music.volume<1){
+music.volume+=0.05;
+}else{clearInterval(fade);}
+},200);
 playing=true;
 }else{
 music.pause();
@@ -236,7 +258,40 @@ playing=false;
 }
 }
 
-/* Fireworks spawn */
+/* Sparkles */
+for(let i=0;i<40;i++){
+let s=document.createElement("div");
+s.className="sparkle";
+s.style.left=Math.random()*100+"vw";
+s.style.top=Math.random()*100+"vh";
+document.body.appendChild(s);
+}
+
+/* Balloons */
+for(let i=0;i<10;i++){
+let b=document.createElement("div");
+b.className="balloon";
+b.style.left=Math.random()*100+"vw";
+b.style.animationDuration=(6+Math.random()*4)+"s";
+b.onclick=function(){
+b.remove();
+burstConfetti(b.style.left);
+};
+document.body.appendChild(b);
+}
+
+/* Confetti Burst */
+function burstConfetti(x){
+for(let i=0;i<20;i++){
+let c=document.createElement("div");
+c.className="confetti";
+c.style.left=x;
+document.body.appendChild(c);
+setTimeout(()=>c.remove(),2000);
+}
+}
+
+/* Fireworks */
 setInterval(()=>{
 let f=document.createElement("div");
 f.className="firework";
@@ -244,7 +299,7 @@ f.style.left=Math.random()*100+"vw";
 f.style.top=Math.random()*50+"vh";
 document.body.appendChild(f);
 setTimeout(()=>f.remove(),2000);
-},2000);
+},3000);
 </script>
 
 </body>
