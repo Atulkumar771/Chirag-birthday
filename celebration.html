@@ -12,6 +12,7 @@ background:linear-gradient(135deg,#ffd1dc,#ffe6f0);
 overflow-x:hidden;
 }
 
+/* Fade animation */
 .fade{
 opacity:0;
 transform:translateY(40px);
@@ -22,6 +23,7 @@ opacity:1;
 transform:translateY(0);
 }
 
+/* HERO */
 .hero{
 min-height:100vh;
 display:flex;
@@ -29,18 +31,61 @@ flex-direction:column;
 justify-content:center;
 align-items:center;
 text-align:center;
+position:relative;
 }
 
-.title{
-font-size:34px;
-font-weight:bold;
-color:#c2185b;
-text-shadow:0 0 20px #ff4081;
-animation:glow 2s infinite alternate;
+/* ===== TITLE ANIMATION ===== */
+.title-wrapper{
+text-align:center;
+margin-top:20px;
+position:relative;
 }
-@keyframes glow{
+
+.title-line{
+font-size:26px;
+color:#c2185b;
+opacity:0;
+animation:slideDown 1s ease forwards;
+}
+
+.title-name{
+font-size:42px;
+font-weight:bold;
+color:#ff1493;
+text-shadow:0 0 20px #ff4081;
+opacity:0;
+animation:slideUp 1s ease forwards, glowPulse 2s infinite alternate 1.5s;
+}
+
+@keyframes slideDown{
+from{transform:translateY(-40px);opacity:0;}
+to{transform:translateY(0);opacity:1;}
+}
+
+@keyframes slideUp{
+from{transform:translateY(40px);opacity:0;}
+to{transform:translateY(0);opacity:1;}
+}
+
+@keyframes glowPulse{
 from{text-shadow:0 0 10px #ff4081;}
-to{text-shadow:0 0 25px #ff1493;}
+to{text-shadow:0 0 30px #ff1493;}
+}
+
+/* Sparkles */
+.sparkle{
+position:absolute;
+width:6px;
+height:6px;
+background:white;
+border-radius:50%;
+animation:sparkleFloat 3s linear infinite;
+opacity:0.7;
+}
+
+@keyframes sparkleFloat{
+0%{transform:translateY(0);opacity:1;}
+100%{transform:translateY(-80px);opacity:0;}
 }
 
 /* Cake */
@@ -114,6 +159,7 @@ from{transform:translateX(-50%) scale(1);}
 to{transform:translateX(-50%) scale(1.2);}
 }
 
+/* Radio */
 .radio-section{
 text-align:center;
 margin-top:-60px;
@@ -128,6 +174,7 @@ transition:0.3s;
 transform:scale(1.1);
 }
 
+/* Sections */
 .section{
 padding:80px 20px;
 text-align:center;
@@ -144,8 +191,10 @@ font-size:19px;
 color:#444;
 max-width:450px;
 margin:auto;
+line-height:1.6;
 }
 
+/* Secret */
 .secret-box{
 display:none;
 text-align:center;
@@ -173,6 +222,7 @@ margin-left:10px;
 <audio id="bgMusic" src="loveyou.mp3" loop></audio>
 
 <div class="hero fade show">
+
 <div class="cake">
 <div class="plate"></div>
 <div class="layer"></div>
@@ -182,7 +232,12 @@ margin-left:10px;
 <div class="candle"></div>
 <div class="flame"></div>
 </div>
-<div class="title">Happy Birthday Chirag 👑</div>
+
+<div class="title-wrapper">
+<div class="title-line">Happy Birthday</div>
+<div class="title-name">CHIRAG 👑</div>
+</div>
+
 </div>
 
 <div class="radio-section fade show">
@@ -190,6 +245,7 @@ margin-left:10px;
 <p>Tap the radio to play music 🎵</p>
 </div>
 
+<!-- 6 Images -->
 <div class="section fade">
 <img src="chirag1.jpg">
 <div class="wish">Some friendships are temporary. Ours became family.</div>
@@ -205,15 +261,40 @@ margin-left:10px;
 <div class="wish">You didn’t just play beside me — you stood beside me.</div>
 </div>
 
+<div class="section fade">
+<img src="chirag4.jpg">
+<div class="wish">When I doubted myself, you reminded me who I was.</div>
+</div>
+
+<div class="section fade">
+<img src="chirag5.jpg">
+<div class="wish">7 years later — still my teammate. Still my brother.</div>
+</div>
+
+<div class="section fade">
+<img src="chirag6.jpg">
+<div class="wish">Legends level up. Kings evolve. Today, you rise higher.</div>
+</div>
+
 <div class="secret-box" id="secretBox">
-<p>Enter the 4 digit code 🔐</p>
+<p>Only real ones know the code 🔐</p>
 <input type="password" id="codeInput" placeholder="Enter code">
 <button onclick="checkCode()">Unlock</button>
 </div>
 
 <script>
 
-/* Fade */
+/* Sparkles around hero */
+for(let i=0;i<12;i++){
+let s=document.createElement("div");
+s.className="sparkle";
+s.style.left=(window.innerWidth/2 + (Math.random()*200-100))+"px";
+s.style.top="45vh";
+s.style.animationDuration=(2+Math.random()*2)+"s";
+document.body.appendChild(s);
+}
+
+/* Fade scroll */
 const fades=document.querySelectorAll('.fade');
 window.addEventListener('scroll',()=>{
 fades.forEach(el=>{
@@ -224,27 +305,27 @@ el.classList.add('show');
 });
 });
 
-/* Music System */
-const music = document.getElementById("bgMusic");
-let playing = false;
+/* Music */
+const music=document.getElementById("bgMusic");
+let playing=false;
 
 function toggleMusic(){
-    if(!playing){
-        music.currentTime = 0;
-        music.play();
-        playing = true;
-        document.getElementById("secretBox").style.display="block";
-    } else {
-        music.pause();
-        playing = false;
-    }
+if(!playing){
+music.currentTime=0;
+music.play();
+playing=true;
+document.getElementById("secretBox").style.display="block";
+}else{
+music.pause();
+playing=false;
+}
 }
 
-window.addEventListener("beforeunload", function(){
-    localStorage.setItem("musicTime", music.currentTime);
+window.addEventListener("beforeunload",function(){
+localStorage.setItem("musicTime",music.currentTime);
 });
 
-/* Secret Code */
+/* Secret code */
 function checkCode(){
 if(document.getElementById("codeInput").value==="1802"){
 window.location.href="secret.html";
