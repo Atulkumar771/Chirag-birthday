@@ -17,98 +17,117 @@ font-family:Arial;
 overflow:hidden;
 }
 
-/* Sparkles */
-.sparkle{
-position:absolute;
-width:4px;
-height:4px;
-background:white;
-border-radius:50%;
-opacity:0.6;
-animation:twinkle 3s infinite alternate;
-}
-@keyframes twinkle{
-from{opacity:0.2;}
-to{opacity:1;}
-}
-
-/* Balloons */
+/* ===== IMPROVED BALLOONS ===== */
 .balloon{
 position:absolute;
-bottom:-100px;
-width:40px;
-height:50px;
-background:#ff8fab;
-border-radius:50%;
-animation:float 8s linear infinite;
+bottom:-120px;
+width:50px;
+height:65px;
+border-radius:50% 50% 45% 45%;
+animation:float 10s linear infinite;
 cursor:pointer;
 }
-@keyframes float{
-from{transform:translateY(0);}
-to{transform:translateY(-120vh);}
+
+.balloon::after{ /* string */
+content:"";
+position:absolute;
+width:2px;
+height:60px;
+background:#999;
+top:65px;
+left:50%;
+transform:translateX(-50%);
 }
 
-/* Card */
+.balloon::before{ /* shine */
+content:"";
+position:absolute;
+width:15px;
+height:25px;
+background:rgba(255,255,255,0.4);
+border-radius:50%;
+top:10px;
+left:12px;
+}
+
+@keyframes float{
+0%{transform:translateY(0);}
+100%{transform:translateY(-130vh);}
+}
+
+/* ===== CARD ===== */
 .card{
 position:relative;
-width:360px;
-height:320px;
+width:380px;
+height:340px;
 background:white;
-border-radius:20px;
+border-radius:25px;
 display:flex;
 justify-content:center;
 align-items:center;
 flex-direction:column;
-box-shadow:0 10px 30px rgba(0,0,0,0.15);
+box-shadow:0 15px 40px rgba(0,0,0,0.15);
 overflow:hidden;
 }
 
-/* Cake */
+/* ===== IMPROVED CAKE ===== */
 .cake{
 position:relative;
-width:140px;
-height:120px;
+width:160px;
+height:140px;
 margin-bottom:20px;
 animation:drop 6s infinite;
-filter:drop-shadow(0 10px 15px rgba(0,0,0,0.2));
 }
 
 @keyframes drop{
-0%{transform:translateY(-350px);}
+0%{transform:translateY(-400px);}
 40%{transform:translateY(0);}
-55%{transform:translateY(-20px);}
+55%{transform:translateY(-25px);}
 70%{transform:translateY(0);}
-100%{transform:translateY(-350px);}
+100%{transform:translateY(-400px);}
 }
 
-/* Cake layers */
+/* Plate */
+.plate{
+position:absolute;
+bottom:-10px;
+width:180px;
+height:20px;
+background:#eee;
+border-radius:50%;
+left:50%;
+transform:translateX(-50%);
+box-shadow:0 5px 10px rgba(0,0,0,0.2);
+}
+
+/* Layers */
 .layer{
-width:140px;
-height:30px;
+width:160px;
+height:35px;
 background:#ff8fab;
 border-radius:10px;
 position:absolute;
 bottom:0;
-opacity:0;
-animation:layerAppear 6s infinite;
 }
 
 .layer.middle{
-bottom:30px;
+bottom:35px;
 background:#ffb3c6;
-animation-delay:0.2s;
 }
 
 .layer.top{
-bottom:60px;
+bottom:70px;
 background:#ffc2d1;
-animation-delay:0.4s;
 }
 
-@keyframes layerAppear{
-0%,35%{opacity:0;}
-40%,90%{opacity:1;}
-100%{opacity:0;}
+/* Icing drip */
+.icing{
+position:absolute;
+bottom:100px;
+width:160px;
+height:20px;
+background:#fff;
+border-radius:10px;
 }
 
 /* Candle 27 */
@@ -117,55 +136,20 @@ position:absolute;
 top:-50px;
 left:50%;
 transform:translateX(-50%);
-font-size:26px;
+font-size:28px;
 font-weight:bold;
 color:#ff4081;
 text-shadow:0 0 15px #ff4081;
-opacity:0;
-animation:candleAppear 6s infinite;
 }
 
-@keyframes candleAppear{
-0%,45%{opacity:0;}
-55%,90%{opacity:1;}
-100%{opacity:0;}
-}
-
-/* Confetti */
-.confetti{
-position:absolute;
-width:6px;
-height:6px;
-background:gold;
-animation:confettiFall 2s linear forwards;
-}
-@keyframes confettiFall{
-from{transform:translateY(0);}
-to{transform:translateY(100vh);}
-}
-
-/* Fireworks */
-.firework{
-position:absolute;
-width:5px;
-height:5px;
-background:orange;
-border-radius:50%;
-animation:explode 2s linear forwards;
-}
-@keyframes explode{
-0%{opacity:1; transform:scale(1);}
-100%{opacity:0; transform:scale(6);}
-}
-
-/* Split Text */
+/* ===== SPLIT TEXT ===== */
 .text-wrapper{
 overflow:hidden;
-height:40px;
+height:45px;
 }
 
 .text{
-font-size:24px;
+font-size:26px;
 font-weight:bold;
 color:#c2185b;
 white-space:nowrap;
@@ -197,7 +181,21 @@ animation:slideRight 6s infinite;
 100%{transform:translateX(150%);}
 }
 
-/* Buttons */
+/* ===== FIREWORKS ===== */
+.firework{
+position:absolute;
+width:6px;
+height:6px;
+background:gold;
+border-radius:50%;
+animation:explode 2s linear forwards;
+}
+@keyframes explode{
+0%{opacity:1; transform:scale(1);}
+100%{opacity:0; transform:scale(8);}
+}
+
+/* ===== BUTTONS ===== */
 button{
 margin-top:15px;
 padding:10px 20px;
@@ -216,9 +214,11 @@ box-shadow:0 5px 15px rgba(0,0,0,0.1);
 <div class="card">
 
 <div class="cake">
+<div class="plate"></div>
 <div class="layer"></div>
 <div class="layer middle"></div>
 <div class="layer top"></div>
+<div class="icing"></div>
 <div class="candle">27</div>
 </div>
 
@@ -247,9 +247,8 @@ if(!playing){
 music.volume=0;
 music.play();
 let fade=setInterval(()=>{
-if(music.volume<1){
-music.volume+=0.05;
-}else{clearInterval(fade);}
+if(music.volume<1){music.volume+=0.05;}
+else{clearInterval(fade);}
 },200);
 playing=true;
 }else{
@@ -258,37 +257,15 @@ playing=false;
 }
 }
 
-/* Sparkles */
-for(let i=0;i<40;i++){
-let s=document.createElement("div");
-s.className="sparkle";
-s.style.left=Math.random()*100+"vw";
-s.style.top=Math.random()*100+"vh";
-document.body.appendChild(s);
-}
-
-/* Balloons */
-for(let i=0;i<10;i++){
+/* Better Balloons */
+const colors=["#ff8fab","#ffb3c6","#ffc2d1","#ff6b6b","#ffa94d"];
+for(let i=0;i<12;i++){
 let b=document.createElement("div");
 b.className="balloon";
 b.style.left=Math.random()*100+"vw";
-b.style.animationDuration=(6+Math.random()*4)+"s";
-b.onclick=function(){
-b.remove();
-burstConfetti(b.style.left);
-};
+b.style.background=colors[Math.floor(Math.random()*colors.length)];
+b.style.animationDuration=(8+Math.random()*5)+"s";
 document.body.appendChild(b);
-}
-
-/* Confetti Burst */
-function burstConfetti(x){
-for(let i=0;i<20;i++){
-let c=document.createElement("div");
-c.className="confetti";
-c.style.left=x;
-document.body.appendChild(c);
-setTimeout(()=>c.remove(),2000);
-}
 }
 
 /* Fireworks */
