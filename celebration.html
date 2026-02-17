@@ -12,7 +12,7 @@ background:linear-gradient(135deg,#ffd1dc,#ffe6f0);
 overflow-x:hidden;
 }
 
-/* Fade animation */
+/* Fade */
 .fade{
 opacity:0;
 transform:translateY(40px);
@@ -23,7 +23,7 @@ opacity:1;
 transform:translateY(0);
 }
 
-/* ===== HERO ===== */
+/* HERO */
 .hero{
 min-height:100vh;
 display:flex;
@@ -118,7 +118,28 @@ from{transform:translateX(-50%) scale(1);}
 to{transform:translateX(-50%) scale(1.2);}
 }
 
-/* Sections */
+/* RADIO SECTION */
+.radio-section{
+text-align:center;
+margin-top:-60px;
+margin-bottom:60px;
+}
+
+.radio-section img{
+width:120px;
+cursor:pointer;
+transition:0.3s;
+}
+.radio-section img:hover{
+transform:scale(1.1);
+}
+
+.play-text{
+margin-top:10px;
+color:#444;
+}
+
+/* SECTIONS */
 .section{
 padding:80px 20px;
 text-align:center;
@@ -141,46 +162,11 @@ margin-right:auto;
 line-height:1.6;
 }
 
-/* Final */
-.final{
-padding:60px 20px;
-text-align:center;
-background:linear-gradient(135deg,#ffc2d1,#ffe6f0);
-}
-
-.final h2{
-color:#c2185b;
-}
-
-/* Radio Section */
-.radio-section{
+/* SECRET BOX */
+.secret-box{
+display:none;
 text-align:center;
 padding:40px 20px;
-}
-
-.radio-section img{
-width:120px;
-cursor:pointer;
-transition:0.3s;
-}
-
-.radio-section img:hover{
-transform:scale(1.1);
-}
-
-.play-btn{
-margin-top:15px;
-padding:10px 20px;
-border:none;
-border-radius:20px;
-background:#ff4081;
-color:white;
-cursor:pointer;
-}
-
-/* Secret Code */
-.secret-box{
-margin-top:40px;
 }
 
 .secret-box input{
@@ -205,7 +191,7 @@ margin-left:10px;
 
 <audio id="bgMusic" src="loveyou.mp3"></audio>
 
-<div class="hero fade show"> <!-- show added so it appears instantly -->
+<div class="hero fade show">
 <div class="cake">
 <div class="plate"></div>
 <div class="layer"></div>
@@ -215,7 +201,13 @@ margin-left:10px;
 <div class="candle"></div>
 <div class="flame"></div>
 </div>
-<div class="title">Happy 27th Birthday, King 👑</div>
+<div class="title">Happy Birthday Chirag👑</div>
+</div>
+
+<!-- RADIO RIGHT AFTER HERO -->
+<div class="radio-section fade show">
+<img src="radio.png" onclick="toggleMusic()">
+<div class="play-text">Tap the radio to play music 🎵</div>
 </div>
 
 <div class="section fade">
@@ -248,25 +240,9 @@ margin-left:10px;
 <div class="wish">Legends level up. Kings evolve. Today, you rise higher.</div>
 </div>
 
-<div class="final fade">
-<h2>Always My Brother</h2>
-<p>
-From strangers on Discord to brothers in life —  
-this bond stays unshaken.  
-Happy Birthday, Chirag. 👑🔥
-</p>
-</div>
-
-<!-- Radio Section -->
-<div class="radio-section fade">
-<img src="radio.png" onclick="toggleMusic()">
-<br>
-<button class="play-btn" onclick="toggleMusic()">Tap to Play Music 🎵</button>
-</div>
-
-<!-- Secret Code -->
-<div class="secret-box fade">
-<p>Enter Secret Code 🔐</p>
+<!-- SECRET CODE (Hidden Until Music Played) -->
+<div class="secret-box" id="secretBox">
+<p>Only real ones know the code 🔐</p>
 <input type="password" id="codeInput" placeholder="Enter code">
 <button onclick="checkCode()">Unlock</button>
 </div>
@@ -283,13 +259,14 @@ el.classList.add('show');
 });
 });
 
-/* Music */
+/* Music + Reveal Secret */
 const music=document.getElementById("bgMusic");
 let playing=false;
 function toggleMusic(){
 if(!playing){
 music.play();
 playing=true;
+document.getElementById("secretBox").style.display="block";
 }else{
 music.pause();
 playing=false;
