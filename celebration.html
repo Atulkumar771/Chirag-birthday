@@ -7,70 +7,49 @@
 <style>
 body{
 margin:0;
-height:100vh;
+min-height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
 flex-direction:column;
 background:linear-gradient(135deg,#ffd1dc,#ffe6f0);
 font-family:Arial;
-overflow:hidden;
+overflow-x:hidden;
+position:relative;
 }
 
-/* ===== IMPROVED BALLOONS ===== */
-.balloon{
+/* ===== BACKGROUND BALLOONS ===== */
+.bg-balloon{
 position:absolute;
-bottom:-120px;
-width:50px;
-height:65px;
+width:60px;
+height:80px;
 border-radius:50% 50% 45% 45%;
-animation:float 10s linear infinite;
-cursor:pointer;
-}
-
-.balloon::after{ /* string */
-content:"";
-position:absolute;
-width:2px;
-height:60px;
-background:#999;
-top:65px;
-left:50%;
-transform:translateX(-50%);
-}
-
-.balloon::before{ /* shine */
-content:"";
-position:absolute;
-width:15px;
-height:25px;
-background:rgba(255,255,255,0.4);
-border-radius:50%;
-top:10px;
-left:12px;
+opacity:0.25;
+filter:blur(1px);
+animation:float 18s linear infinite;
+z-index:0;
 }
 
 @keyframes float{
 0%{transform:translateY(0);}
-100%{transform:translateY(-130vh);}
+100%{transform:translateY(-120vh);}
 }
 
 /* ===== CARD ===== */
 .card{
 position:relative;
+z-index:2;
 width:380px;
-height:340px;
 background:white;
 border-radius:25px;
-display:flex;
-justify-content:center;
-align-items:center;
-flex-direction:column;
+padding:30px 20px;
 box-shadow:0 15px 40px rgba(0,0,0,0.15);
-overflow:hidden;
+display:flex;
+flex-direction:column;
+align-items:center;
 }
 
-/* ===== IMPROVED CAKE ===== */
+/* ===== CAKE ===== */
 .cake{
 position:relative;
 width:160px;
@@ -80,27 +59,13 @@ animation:drop 6s infinite;
 }
 
 @keyframes drop{
-0%{transform:translateY(-400px);}
+0%{transform:translateY(-300px);}
 40%{transform:translateY(0);}
-55%{transform:translateY(-25px);}
+55%{transform:translateY(-20px);}
 70%{transform:translateY(0);}
-100%{transform:translateY(-400px);}
+100%{transform:translateY(-300px);}
 }
 
-/* Plate */
-.plate{
-position:absolute;
-bottom:-10px;
-width:180px;
-height:20px;
-background:#eee;
-border-radius:50%;
-left:50%;
-transform:translateX(-50%);
-box-shadow:0 5px 10px rgba(0,0,0,0.2);
-}
-
-/* Layers */
 .layer{
 width:160px;
 height:35px;
@@ -120,17 +85,27 @@ bottom:70px;
 background:#ffc2d1;
 }
 
-/* Icing drip */
 .icing{
 position:absolute;
-bottom:100px;
+bottom:105px;
 width:160px;
 height:20px;
-background:#fff;
+background:white;
 border-radius:10px;
 }
 
-/* Candle 27 */
+.plate{
+position:absolute;
+bottom:-10px;
+width:180px;
+height:20px;
+background:#eee;
+border-radius:50%;
+left:50%;
+transform:translateX(-50%);
+box-shadow:0 5px 10px rgba(0,0,0,0.2);
+}
+
 .candle{
 position:absolute;
 top:-50px;
@@ -146,6 +121,7 @@ text-shadow:0 0 15px #ff4081;
 .text-wrapper{
 overflow:hidden;
 height:45px;
+margin-bottom:20px;
 }
 
 .text{
@@ -181,23 +157,28 @@ animation:slideRight 6s infinite;
 100%{transform:translateX(150%);}
 }
 
-/* ===== FIREWORKS ===== */
-.firework{
-position:absolute;
-width:6px;
-height:6px;
-background:gold;
-border-radius:50%;
-animation:explode 2s linear forwards;
-}
-@keyframes explode{
-0%{opacity:1; transform:scale(1);}
-100%{opacity:0; transform:scale(8);}
+/* ===== PHOTO GRID ===== */
+.gallery{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:10px;
+width:100%;
+margin-top:10px;
 }
 
-/* ===== BUTTONS ===== */
+.gallery img{
+width:100%;
+border-radius:10px;
+transition:transform 0.3s ease;
+}
+
+.gallery img:hover{
+transform:scale(1.05);
+}
+
+/* ===== BUTTON ===== */
 button{
-margin-top:15px;
+margin-top:20px;
 padding:10px 20px;
 border:none;
 border-radius:25px;
@@ -206,10 +187,24 @@ color:white;
 font-size:14px;
 cursor:pointer;
 box-shadow:0 5px 15px rgba(0,0,0,0.1);
+z-index:2;
 }
 </style>
 </head>
 <body>
+
+<!-- BACKGROUND BALLOONS -->
+<script>
+const colors=["#ff8fab","#ffb3c6","#ffc2d1","#ffa6c1"];
+for(let i=0;i<6;i++){
+let b=document.createElement("div");
+b.className="bg-balloon";
+b.style.left=Math.random()*100+"vw";
+b.style.background=colors[Math.floor(Math.random()*colors.length)];
+b.style.animationDuration=(15+Math.random()*10)+"s";
+document.body.appendChild(b);
+}
+</script>
 
 <div class="card">
 
@@ -229,12 +224,18 @@ box-shadow:0 5px 15px rgba(0,0,0,0.1);
 </div>
 </div>
 
+<div class="gallery">
+<img src="chirag1.jpg">
+<img src="chirag2.jpg">
+<img src="chirag3.jpg">
+<img src="chirag4.jpg">
+<img src="chirag5.jpg">
+<img src="chirag6.jpg">
+</div>
+
 </div>
 
 <button onclick="toggleMusic()">🎵 Play / Pause Music</button>
-<button onclick="window.location.href='gallery.html'">
-See Pictures 📸
-</button>
 
 <audio id="bgMusic" src="loveyou.mp3"></audio>
 
@@ -256,27 +257,6 @@ music.pause();
 playing=false;
 }
 }
-
-/* Better Balloons */
-const colors=["#ff8fab","#ffb3c6","#ffc2d1","#ff6b6b","#ffa94d"];
-for(let i=0;i<12;i++){
-let b=document.createElement("div");
-b.className="balloon";
-b.style.left=Math.random()*100+"vw";
-b.style.background=colors[Math.floor(Math.random()*colors.length)];
-b.style.animationDuration=(8+Math.random()*5)+"s";
-document.body.appendChild(b);
-}
-
-/* Fireworks */
-setInterval(()=>{
-let f=document.createElement("div");
-f.className="firework";
-f.style.left=Math.random()*100+"vw";
-f.style.top=Math.random()*50+"vh";
-document.body.appendChild(f);
-setTimeout(()=>f.remove(),2000);
-},3000);
 </script>
 
 </body>
