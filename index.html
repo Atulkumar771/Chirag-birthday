@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chirag Birthday 🎂</title>
+<title>Chirag Birthday Portal 🎂</title>
 
 <style>
 body{
@@ -18,19 +18,43 @@ text-align:center;
 
 .card{
 background:white;
-padding:30px;
-border-radius:20px;
-box-shadow:0 10px 30px rgba(0,0,0,0.15);
+padding:40px;
+border-radius:25px;
+box-shadow:0 15px 40px rgba(0,0,0,0.15);
+max-width:350px;
+animation:fadeIn 1s ease;
+}
+
+@keyframes fadeIn{
+from{opacity:0; transform:translateY(30px);}
+to{opacity:1; transform:translateY(0);}
 }
 
 h1{
 color:#c2185b;
+margin-bottom:20px;
 }
 
-#countdown{
-margin-top:15px;
+#content{
 font-size:20px;
 font-weight:bold;
+color:#444;
+}
+
+button{
+margin-top:20px;
+padding:10px 20px;
+border:none;
+border-radius:20px;
+background:#ff1493;
+color:white;
+font-size:16px;
+cursor:pointer;
+transition:0.3s;
+}
+
+button:hover{
+transform:scale(1.05);
 }
 </style>
 </head>
@@ -38,26 +62,24 @@ font-weight:bold;
 
 <div class="card">
 <h1>🎂 Birthday Portal 🎂</h1>
-<div id="countdown"></div>
+<div id="content"></div>
 </div>
 
 <script>
 
 const targetDate = new Date("February 18, 2026 00:00:00");
 const now = new Date();
-const countdownEl = document.getElementById("countdown");
+const content = document.getElementById("content");
 
-// If birthday already passed → go directly
-if(now >= targetDate){
-    window.location.href = "celebration.html";
-}else{
+if(now < targetDate){
 
     function updateCountdown(){
         const now = new Date();
         const distance = targetDate - now;
 
         if(distance <= 0){
-            window.location.href="celebration.html";
+            content.innerHTML =
+            "🎉 It's Time! 🎉<br><button onclick='enter()'>Enter Celebration</button>";
             return;
         }
 
@@ -65,12 +87,21 @@ if(now >= targetDate){
         const minutes = Math.floor((distance % (1000*60*60))/(1000*60));
         const seconds = Math.floor((distance % (1000*60))/(1000));
 
-        countdownEl.innerHTML =
+        content.innerHTML =
         hours + "h " + minutes + "m " + seconds + "s";
     }
 
     setInterval(updateCountdown,1000);
     updateCountdown();
+
+}else{
+    // After birthday passed
+    content.innerHTML =
+    "🎉 27 Years Completed 🎉<br><button onclick='enter()'>Enter Celebration</button>";
+}
+
+function enter(){
+    window.location.href="celebration.html";
 }
 
 </script>
