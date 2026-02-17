@@ -2,159 +2,76 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chirag's Birthday Countdown🎂</title>
+<title>Chirag Birthday 🎂</title>
 
 <style>
 body{
 margin:0;
-min-height:100vh;
+height:100vh;
 display:flex;
-flex-direction:column;
 justify-content:center;
 align-items:center;
 background:linear-gradient(135deg,#ffe6f0,#ffd1dc);
 font-family:Arial;
 text-align:center;
-overflow:hidden;
+}
+
+.card{
+background:white;
+padding:30px;
+border-radius:20px;
+box-shadow:0 10px 30px rgba(0,0,0,0.15);
 }
 
 h1{
-margin-bottom:30px;
 color:#c2185b;
 }
 
-.container{
-display:grid;
-grid-template-columns:repeat(3,120px);
-gap:20px;
-}
-
-.box{
-width:120px;
-height:120px;
-border-radius:20px;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-color:white;
+#countdown{
+margin-top:15px;
+font-size:20px;
 font-weight:bold;
-box-shadow:0 10px 25px rgba(0,0,0,0.2);
-}
-
-.value{
-font-size:22px;
-transition:transform 0.6s;
-}
-
-.label{
-font-size:12px;
-margin-top:8px;
-letter-spacing:1px;
-}
-
-.flip{
-animation:flipAnim 0.6s ease;
-}
-
-@keyframes flipAnim{
-0%{transform:rotateX(0deg);}
-100%{transform:rotateX(360deg);}
-}
-
-/* Colors */
-.years{background:linear-gradient(135deg,#ff8fab,#ff1493);}
-.months{background:linear-gradient(135deg,#7b2ff7,#f107a3);}
-.weeks{background:linear-gradient(135deg,#00c6ff,#0072ff);}
-.days{background:linear-gradient(135deg,#f7971e,#ffd200);}
-.hours{background:linear-gradient(135deg,#43e97b,#38f9d7);}
-.minutes{background:linear-gradient(135deg,#ff9966,#ff5e62);}
-.seconds{background:linear-gradient(135deg,#36d1dc,#5b86e5);}
-
-.unlock{
-margin-top:40px;
-font-size:28px;
-font-weight:bold;
-color:#ff1493;
-opacity:0;
-transition:1.5s;
 }
 </style>
 </head>
 <body>
 
-<h1>🌍 Chirag's Birthday Countdown 🌍</h1>
-
-<div class="container">
-
-<div class="box years"><div class="value" id="years">0</div><div class="label">YEARS</div></div>
-<div class="box months"><div class="value" id="months">0</div><div class="label">MONTHS</div></div>
-<div class="box weeks"><div class="value" id="weeks">0</div><div class="label">WEEKS</div></div>
-<div class="box days"><div class="value" id="days">0</div><div class="label">DAYS</div></div>
-<div class="box hours"><div class="value" id="hours">0</div><div class="label">HOURS</div></div>
-<div class="box minutes"><div class="value" id="minutes">0</div><div class="label">MINUTES</div></div>
-<div class="box seconds"><div class="value" id="seconds">0</div><div class="label">SECONDS</div></div>
-
-</div>
-
-<div class="unlock" id="unlockText">
-🎉 27 YEARS COMPLETED 🎉
+<div class="card">
+<h1>🎂 Birthday Portal 🎂</h1>
+<div id="countdown"></div>
 </div>
 
 <script>
 
-const birthDate = new Date("February 18, 1999 00:00:00");
 const targetDate = new Date("February 18, 2026 00:00:00");
-
-const ids=["years","months","weeks","days","hours","minutes","seconds"];
-let previous={};
-
-function updateLife(){
-
 const now = new Date();
-let diff = now - birthDate;
+const countdownEl = document.getElementById("countdown");
 
-// Total calculations
-let totalSeconds = Math.floor(diff / 1000);
-let totalMinutes = Math.floor(totalSeconds / 60);
-let totalHours = Math.floor(totalMinutes / 60);
-let totalDays = Math.floor(totalHours / 24);
-let totalWeeks = Math.floor(totalDays / 7);
-let totalMonths = Math.floor(totalDays / 30.4375); // avg month
-let totalYears = Math.floor(totalMonths / 12);
+// If birthday already passed → go directly
+if(now >= targetDate){
+    window.location.href = "celebration.html";
+}else{
 
-let values = {
-years: totalYears,
-months: totalMonths,
-weeks: totalWeeks,
-days: totalDays,
-hours: totalHours,
-minutes: totalMinutes,
-seconds: totalSeconds
-};
+    function updateCountdown(){
+        const now = new Date();
+        const distance = targetDate - now;
 
-ids.forEach(id=>{
-let el=document.getElementById(id);
-if(previous[id]!==values[id]){
-el.textContent=values[id];
-el.classList.add("flip");
-setTimeout(()=>el.classList.remove("flip"),600);
-previous[id]=values[id];
+        if(distance <= 0){
+            window.location.href="celebration.html";
+            return;
+        }
+
+        const hours = Math.floor((distance % (1000*60*60*24))/(1000*60*60));
+        const minutes = Math.floor((distance % (1000*60*60))/(1000*60));
+        const seconds = Math.floor((distance % (1000*60))/(1000));
+
+        countdownEl.innerHTML =
+        hours + "h " + minutes + "m " + seconds + "s";
+    }
+
+    setInterval(updateCountdown,1000);
+    updateCountdown();
 }
-});
-
-// Midnight unlock
-if(now>=targetDate){
-document.getElementById("unlockText").style.opacity="1";
-setTimeout(()=>{
-window.location.href="celebration.html";
-},5000);
-}
-
-}
-
-setInterval(updateLife,1000);
-updateLife();
 
 </script>
 
