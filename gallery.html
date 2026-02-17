@@ -1,1 +1,77 @@
 
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chirag Memories 📸</title>
+
+<style>
+body {
+  margin: 0;
+  background: #111;
+  text-align: center;
+  color: white;
+  font-family: Arial;
+}
+
+img {
+  width: 80%;
+  max-width: 400px;
+  margin-top: 20px;
+  border-radius: 15px;
+  box-shadow: 0 0 20px #ff4d6d;
+}
+
+button {
+  margin: 20px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: none;
+  background: #00e5ff;
+  font-size: 16px;
+}
+</style>
+</head>
+<body>
+
+<h2>Our Memories 💙</h2>
+
+<img id="photo" src="photo1.jpg">
+
+<br>
+<button onclick="prev()">⬅ Prev</button>
+<button onclick="next()">Next ➡</button>
+
+<br>
+<button onclick="goSecret()">Open Secret Message 💌</button>
+
+<script>
+const photos = [
+"photo1.jpg",
+"photo2.jpg",
+"photo3.jpg",
+"photo4.jpg",
+"photo5.jpg",
+"photo6.jpg"
+];
+
+let index = 0;
+const img = document.getElementById("photo");
+
+function next(){
+  index = (index+1)%photos.length;
+  img.src = photos[index];
+}
+
+function prev(){
+  index = (index-1+photos.length)%photos.length;
+  img.src = photos[index];
+}
+
+function goSecret(){
+  window.location.href="secret.html";
+}
+</script>
+
+</body>
+</html>
