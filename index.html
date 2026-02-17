@@ -2,132 +2,70 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chirag Birthday Countdown 🎂</title>
+<title>Chirag Turns 27 🎂</title>
 
 <style>
-body {
-  margin: 0;
-  background: radial-gradient(circle at center, #0f0f1a, #000);
-  color: white;
-  font-family: 'Arial', sans-serif;
-  overflow: hidden;
-  text-align: center;
+body{
+margin:0;
+font-family:Arial;
+background:linear-gradient(135deg,#ffd1dc,#ffe6f0);
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+text-align:center;
+overflow:hidden;
 }
 
-/* Center Content */
-.container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.container{
+background:white;
+padding:40px;
+border-radius:20px;
+box-shadow:0 10px 30px rgba(0,0,0,0.1);
 }
 
-h1 {
-  font-size: 28px;
-  letter-spacing: 2px;
-  color: #ff4d6d;
-  text-shadow: 0 0 15px #ff4d6d;
+h1{
+color:#c2185b;
 }
 
-#timer {
-  font-size: 50px;
-  margin-top: 20px;
-  color: #00e5ff;
-  text-shadow: 0 0 20px #00e5ff;
-  animation: pulse 1.5s infinite;
-}
-
-.subtitle {
-  margin-top: 20px;
-  font-size: 18px;
-  color: #aaa;
-}
-
-/* Glow pulse */
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.1); }
-  100% { transform: scale(1); }
-}
-
-/* Stars background */
-.star {
-  position: absolute;
-  width: 2px;
-  height: 2px;
-  background: white;
-  opacity: 0.7;
-  animation: twinkle 3s infinite ease-in-out alternate;
-}
-
-@keyframes twinkle {
-  from { opacity: 0.2; }
-  to { opacity: 1; }
+#timer{
+font-size:40px;
+color:#ff4081;
+margin-top:15px;
 }
 </style>
 </head>
 <body>
 
 <div class="container">
-  <h1>🎂 Chirag Turns 27 🎂</h1>
-  <div id="timer"></div>
-  <div class="subtitle">🔒 Unlocking at Midnight</div>
+<h1>🎂 Chirag Turns 27 🎂</h1>
+<div id="timer"></div>
+<p>Unlocking at Midnight</p>
 </div>
 
 <script>
-
-// ============================
-// 🔥 TEST MODE
-// ============================
-const TEST_MODE = true; 
-// change to false before birthday night
+const TEST_MODE = true; // change to false on birthday night
 
 const targetDate = new Date("February 18, 2026 00:00:00").getTime();
 const timerEl = document.getElementById("timer");
 
-// ============================
-// 🌌 Create Stars Background
-// ============================
-for (let i = 0; i < 100; i++) {
-  const star = document.createElement("div");
-  star.className = "star";
-  star.style.top = Math.random() * window.innerHeight + "px";
-  star.style.left = Math.random() * window.innerWidth + "px";
-  star.style.animationDuration = (Math.random() * 3 + 2) + "s";
-  document.body.appendChild(star);
-}
-
-// ============================
-// ⏳ Countdown Logic
-// ============================
 const interval = setInterval(() => {
 
-  const now = new Date().getTime();
-  const distance = targetDate - now;
+const now = new Date().getTime();
+const distance = targetDate - now;
 
-  if (distance <= 0 || TEST_MODE) {
-    clearInterval(interval);
+if(distance <= 0 || TEST_MODE){
+clearInterval(interval);
+window.location.href="celebration.html";
+}
 
-    // Smooth fade before redirect
-    document.body.style.transition = "1s";
-    document.body.style.opacity = "0";
+const hours = Math.floor((distance % (1000*60*60*24))/(1000*60*60));
+const minutes = Math.floor((distance % (1000*60*60))/(1000*60));
+const seconds = Math.floor((distance % (1000*60))/1000);
 
-    setTimeout(() => {
-      window.location.href = "celebration.html";
-    }, 1000);
-  }
+timerEl.innerHTML = hours+"h : "+minutes+"m : "+seconds+"s";
 
-  const hours = Math.floor((distance % (1000*60*60*24)) / (1000*60*60));
-  const minutes = Math.floor((distance % (1000*60*60)) / (1000*60));
-  const seconds = Math.floor((distance % (1000*60)) / 1000);
-
-  timerEl.innerHTML =
-    hours + "h : " +
-    minutes + "m : " +
-    seconds + "s";
-
-}, 1000);
-
+},1000);
 </script>
 
 </body>
