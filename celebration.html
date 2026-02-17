@@ -8,64 +8,97 @@
 body{
 margin:0;
 font-family:Arial;
-text-align:center;
-background:linear-gradient(135deg,#ffc1cc,#ffe4ec);
+background:linear-gradient(135deg,#ffd1dc,#ffe6f0);
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+flex-direction:column;
 overflow:hidden;
+text-align:center;
 }
 
-h1{
-margin-top:100px;
-color:#c2185b;
+/* Text Animation */
+.text{
 font-size:36px;
+color:#c2185b;
+opacity:0;
+animation:fadeIn 2s forwards;
 }
 
-.level{
-color:#ff4081;
-font-size:22px;
-margin-bottom:20px;
+@keyframes fadeIn{
+to{opacity:1;}
 }
 
-button{
+/* Heart */
+.heart{
+font-size:60px;
+margin:20px 0;
+animation:beat 1s infinite;
+}
+
+@keyframes beat{
+0%{transform:scale(1);}
+50%{transform:scale(1.2);}
+100%{transform:scale(1);}
+}
+
+/* Music Button */
+.music-btn{
 padding:12px 25px;
 border:none;
 border-radius:25px;
 background:#ff4081;
 color:white;
 font-size:16px;
+margin-top:20px;
+cursor:pointer;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
 }
 
-.confetti{
-position:absolute;
-width:8px;
-height:8px;
-background:white;
-animation:fall 5s linear infinite;
-}
-
-@keyframes fall{
-from{transform:translateY(-100vh);}
-to{transform:translateY(100vh);}
+.next-btn{
+margin-top:20px;
+padding:10px 20px;
+border:none;
+border-radius:20px;
+background:#c2185b;
+color:white;
+font-size:14px;
 }
 </style>
 </head>
 <body>
 
-<h1>🎉 Happy 27th Birthday Chirag 🎂</h1>
-<div class="level">More Than A Best Friend. A Brother. 👑</div>
+<div class="text" id="mainText">
+Happy Birthday Chirag
+</div>
 
-<button onclick="window.location.href='gallery.html'">
-See The Star 🌟
+<div class="heart">❤️</div>
+
+<button class="music-btn" onclick="toggleMusic()">
+🎵 Play Music
 </button>
 
-<audio src="loveyou.mp3" autoplay loop></audio>
+<button class="next-btn" onclick="window.location.href='gallery.html'">
+See Pictures 📸
+</button>
+
+<audio id="bgMusic" src="loveyou.mp3"></audio>
 
 <script>
-for(let i=0;i<60;i++){
-const conf=document.createElement("div");
-conf.className="confetti";
-conf.style.left=Math.random()*100+"vw";
-conf.style.animationDuration=(Math.random()*3+3)+"s";
-document.body.appendChild(conf);
+const music = document.getElementById("bgMusic");
+let playing = false;
+
+function toggleMusic(){
+if(!playing){
+music.play();
+playing = true;
+document.querySelector(".music-btn").innerText="⏸ Pause Music";
+}else{
+music.pause();
+playing = false;
+document.querySelector(".music-btn").innerText="🎵 Play Music";
+}
 }
 </script>
 
