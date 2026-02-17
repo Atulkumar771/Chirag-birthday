@@ -2,55 +2,61 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chirag Birthday Countdown 🎂</title>
+<title>Chirag Live Age 🎂</title>
 
 <style>
 body{
 margin:0;
-height:100vh;
+min-height:100vh;
 display:flex;
 flex-direction:column;
 justify-content:center;
 align-items:center;
 background:linear-gradient(135deg,#ffe6f0,#ffd1dc);
 font-family:Arial;
+text-align:center;
 overflow:hidden;
 }
 
-/* Container */
+h1{
+margin-bottom:30px;
+color:#c2185b;
+}
+
+/* Grid layout */
 .container{
-display:flex;
+display:grid;
+grid-template-columns:repeat(3,120px);
 gap:20px;
 }
 
-/* Bubble */
-.bubble{
-width:110px;
-height:110px;
-border-radius:50%;
+/* Square flip box */
+.box{
+width:120px;
+height:120px;
+border-radius:20px;
 display:flex;
+flex-direction:column;
 justify-content:center;
 align-items:center;
 color:white;
-font-size:32px;
 font-weight:bold;
 position:relative;
-overflow:hidden;
-box-shadow:0 0 25px rgba(0,0,0,0.2);
+box-shadow:0 10px 25px rgba(0,0,0,0.2);
 }
 
-/* Different colors */
-.hours{background:radial-gradient(circle,#ff8fab,#ff1493);}
-.minutes{background:radial-gradient(circle,#7b2ff7,#f107a3);}
-.seconds{background:radial-gradient(circle,#00c6ff,#0072ff);}
-
-/* Flip number */
-.number{
-position:absolute;
+.value{
+font-size:26px;
 transition:transform 0.6s;
-backface-visibility:hidden;
 }
 
+.label{
+font-size:12px;
+margin-top:8px;
+letter-spacing:1px;
+}
+
+/* Flip animation */
 .flip{
 animation:flipAnim 0.6s ease;
 }
@@ -60,14 +66,15 @@ animation:flipAnim 0.6s ease;
 100%{transform:rotateX(360deg);}
 }
 
-.label{
-margin-top:12px;
-text-align:center;
-font-weight:bold;
-color:#c2185b;
-}
+/* Different colors */
+.years{background:linear-gradient(135deg,#ff8fab,#ff1493);}
+.months{background:linear-gradient(135deg,#7b2ff7,#f107a3);}
+.weeks{background:linear-gradient(135deg,#00c6ff,#0072ff);}
+.days{background:linear-gradient(135deg,#f7971e,#ffd200);}
+.hours{background:linear-gradient(135deg,#43e97b,#38f9d7);}
+.minutes{background:linear-gradient(135deg,#ff9966,#ff5e62);}
+.seconds{background:linear-gradient(135deg,#36d1dc,#5b86e5);}
 
-/* Unlock text */
 .unlock{
 margin-top:40px;
 font-size:28px;
@@ -80,28 +87,17 @@ transition:1.5s;
 </head>
 <body>
 
+<h1>🎂 Live Age Counter 🎂</h1>
+
 <div class="container">
 
-<div>
-<div class="bubble hours">
-<div class="number" id="hours">00</div>
-</div>
-<div class="label">HOURS</div>
-</div>
-
-<div>
-<div class="bubble minutes">
-<div class="number" id="minutes">00</div>
-</div>
-<div class="label">MINUTES</div>
-</div>
-
-<div>
-<div class="bubble seconds">
-<div class="number" id="seconds">00</div>
-</div>
-<div class="label">SECONDS</div>
-</div>
+<div class="box years"><div class="value" id="years">0</div><div class="label">YEARS</div></div>
+<div class="box months"><div class="value" id="months">0</div><div class="label">MONTHS</div></div>
+<div class="box weeks"><div class="value" id="weeks">0</div><div class="label">WEEKS</div></div>
+<div class="box days"><div class="value" id="days">0</div><div class="label">DAYS</div></div>
+<div class="box hours"><div class="value" id="hours">0</div><div class="label">HOURS</div></div>
+<div class="box minutes"><div class="value" id="minutes">0</div><div class="label">MINUTES</div></div>
+<div class="box seconds"><div class="value" id="seconds">0</div><div class="label">SECONDS</div></div>
 
 </div>
 
@@ -111,62 +107,75 @@ transition:1.5s;
 
 <script>
 
+const birthDate = new Date("February 18, 1999 00:00:00");
 const targetDate = new Date("February 18, 2026 00:00:00");
 
-const hoursEl=document.getElementById("hours");
-const minutesEl=document.getElementById("minutes");
-const secondsEl=document.getElementById("seconds");
-const unlockText=document.getElementById("unlockText");
+const ids=["years","months","weeks","days","hours","minutes","seconds"];
+let previous={};
 
-let prevH="", prevM="", prevS="";
-
-function updateCountdown(){
+function updateAge(){
 
 const now=new Date();
-const distance=targetDate-now;
+let diff=now-birthDate;
 
-if(distance<=0){
-unlockText.style.opacity="1";
+// Years
+let years=now.getFullYear()-birthDate.getFullYear();
+let monthDiff=now.getMonth()-birthDate.getMonth();
+if(monthDiff<0 || (monthDiff===0 && now.getDate()<birthDate.getDate())){
+years--;
+}
+
+// Remaining after years
+let lastBirthday=new Date(birthDate.getFullYear()+years,birthDate.getMonth(),birthDate.getDate());
+let remaining=now-lastBirthday;
+
+// Months
+let months=Math.floor(remaining/(1000*60*60*24*30));
+remaining%=(1000*60*60*24*30);
+
+// Weeks
+let weeks=Math.floor(remaining/(1000*60*60*24*7));
+remaining%=(1000*60*60*24*7);
+
+// Days
+let days=Math.floor(remaining/(1000*60*60*24));
+remaining%=(1000*60*60*24);
+
+// Hours
+let hours=Math.floor(remaining/(1000*60*60));
+remaining%=(1000*60*60);
+
+// Minutes
+let minutes=Math.floor(remaining/(1000*60));
+remaining%=(1000*60);
+
+// Seconds
+let seconds=Math.floor(remaining/1000);
+
+let values={years,months,weeks,days,hours,minutes,seconds};
+
+ids.forEach(id=>{
+let el=document.getElementById(id);
+if(previous[id]!==values[id]){
+el.textContent=values[id];
+el.classList.add("flip");
+setTimeout(()=>el.classList.remove("flip"),600);
+previous[id]=values[id];
+}
+});
+
+// Midnight unlock
+if(now>=targetDate){
+document.getElementById("unlockText").style.opacity="1";
 setTimeout(()=>{
 window.location.href="celebration.html";
-},4000);
-return;
-}
-
-let hours=Math.floor((distance%(1000*60*60*24))/(1000*60*60));
-let minutes=Math.floor((distance%(1000*60*60))/(1000*60));
-let seconds=Math.floor((distance%(1000*60))/(1000));
-
-hours=String(hours).padStart(2,'0');
-minutes=String(minutes).padStart(2,'0');
-seconds=String(seconds).padStart(2,'0');
-
-/* Flip animation only when value changes */
-if(hours!==prevH){
-hoursEl.textContent=hours;
-hoursEl.classList.add("flip");
-setTimeout(()=>hoursEl.classList.remove("flip"),600);
-prevH=hours;
-}
-
-if(minutes!==prevM){
-minutesEl.textContent=minutes;
-minutesEl.classList.add("flip");
-setTimeout(()=>minutesEl.classList.remove("flip"),600);
-prevM=minutes;
-}
-
-if(seconds!==prevS){
-secondsEl.textContent=seconds;
-secondsEl.classList.add("flip");
-setTimeout(()=>secondsEl.classList.remove("flip"),600);
-prevS=seconds;
+},5000);
 }
 
 }
 
-setInterval(updateCountdown,1000);
-updateCountdown();
+setInterval(updateAge,1000);
+updateAge();
 
 </script>
 
