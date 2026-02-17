@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+here<!DOCTYPE html>
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Happy Birthday Chirag 🎉</title>
+<title>Happy Birthday Chirag 👑</title>
 
 <style>
 body{
@@ -12,7 +12,21 @@ background:linear-gradient(135deg,#ffd1dc,#ffe6f0);
 overflow-x:hidden;
 }
 
-/* ===== FADE IN ON SCROLL ===== */
+/* ===== RADIO MUSIC BUTTON ===== */
+.radio{
+position:fixed;
+top:20px;
+right:20px;
+width:70px;
+cursor:pointer;
+z-index:5;
+transition:transform 0.3s ease;
+}
+.radio:hover{
+transform:scale(1.1);
+}
+
+/* ===== FADE SCROLL ===== */
 .fade{
 opacity:0;
 transform:translateY(40px);
@@ -23,21 +37,6 @@ opacity:1;
 transform:translateY(0);
 }
 
-/* ===== BACKGROUND BALLOONS ===== */
-.bg-balloon{
-position:fixed;
-width:60px;
-height:80px;
-border-radius:50% 50% 45% 45%;
-opacity:0.2;
-animation:float 25s linear infinite;
-z-index:0;
-}
-@keyframes float{
-0%{transform:translateY(100vh);}
-100%{transform:translateY(-120vh);}
-}
-
 /* ===== HERO ===== */
 .hero{
 min-height:100vh;
@@ -45,14 +44,11 @@ display:flex;
 flex-direction:column;
 justify-content:center;
 align-items:center;
-position:relative;
-z-index:2;
 text-align:center;
 }
 
-/* Glowing Title */
 .title{
-font-size:32px;
+font-size:34px;
 font-weight:bold;
 color:#c2185b;
 text-shadow:0 0 20px #ff4081;
@@ -89,7 +85,6 @@ bottom:0;
 }
 .layer.middle{bottom:35px;background:#ffb3c6;}
 .layer.top{bottom:70px;background:#ffc2d1;}
-
 .icing{
 position:absolute;
 bottom:105px;
@@ -98,7 +93,6 @@ height:20px;
 background:white;
 border-radius:10px;
 }
-
 .plate{
 position:absolute;
 bottom:-10px;
@@ -122,7 +116,6 @@ height:30px;
 background:white;
 border-radius:3px;
 }
-
 .flame{
 position:absolute;
 top:-75px;
@@ -139,12 +132,10 @@ from{transform:translateX(-50%) scale(1);}
 to{transform:translateX(-50%) scale(1.2);}
 }
 
-/* ===== IMAGE SECTIONS ===== */
+/* ===== SECTIONS ===== */
 .section{
 padding:80px 20px;
 text-align:center;
-position:relative;
-z-index:2;
 }
 
 .section img{
@@ -152,23 +143,19 @@ width:90%;
 max-width:400px;
 border-radius:20px;
 box-shadow:0 10px 30px rgba(0,0,0,0.2);
-transition:transform 0.5s ease;
-}
-
-.section img:hover{
-transform:scale(1.05);
 }
 
 .wish{
 margin-top:20px;
-font-size:18px;
+font-size:19px;
 color:#444;
-max-width:400px;
+max-width:450px;
 margin-left:auto;
 margin-right:auto;
+line-height:1.6;
 }
 
-/* ===== FINAL MESSAGE ===== */
+/* ===== FINAL ===== */
 .final{
 min-height:80vh;
 display:flex;
@@ -182,46 +169,21 @@ background:linear-gradient(135deg,#ffc2d1,#ffe6f0);
 
 .final h2{
 color:#c2185b;
-font-size:26px;
+font-size:28px;
 }
 
 .final p{
 max-width:500px;
 font-size:18px;
 color:#444;
-}
-
-/* ===== MUSIC BUTTON ===== */
-.music-btn{
-position:fixed;
-top:20px;
-right:20px;
-padding:10px 15px;
-border:none;
-border-radius:20px;
-background:#ff4081;
-color:white;
-cursor:pointer;
-z-index:3;
+line-height:1.7;
 }
 </style>
 </head>
 <body>
 
-<button class="music-btn" onclick="toggleMusic()">🎵 Music</button>
+<img src="radio.png" class="radio" onclick="toggleMusic()">
 <audio id="bgMusic" src="loveyou.mp3"></audio>
-
-<script>
-const colors=["#ff8fab","#ffb3c6","#ffc2d1","#ffa6c1"];
-for(let i=0;i<5;i++){
-let b=document.createElement("div");
-b.className="bg-balloon";
-b.style.left=Math.random()*100+"vw";
-b.style.background=colors[Math.floor(Math.random()*colors.length)];
-b.style.animationDuration=(20+Math.random()*10)+"s";
-document.body.appendChild(b);
-}
-</script>
 
 <div class="hero fade">
 <div class="cake">
@@ -233,56 +195,55 @@ document.body.appendChild(b);
 <div class="candle"></div>
 <div class="flame"></div>
 </div>
-<div class="title">Happy 27th Birthday Chirag 🎂</div>
+<div class="title">Happy 27th Birthday, King 👑</div>
 </div>
 
 <div class="section fade">
 <img src="chirag1.jpg">
-<div class="wish">From Discord strangers to real brothers — destiny works beautifully.</div>
+<div class="wish">Some friendships are temporary. Ours became family.</div>
 </div>
 
 <div class="section fade">
 <img src="chirag2.jpg">
-<div class="wish">Every late-night voice chat built a bond that distance can’t break.</div>
+<div class="wish">Through late-night voice chats and endless laughter, we built something rare.</div>
 </div>
 
 <div class="section fade">
 <img src="chirag3.jpg">
-<div class="wish">From PUBG to BGMI — you were never just a teammate.</div>
+<div class="wish">You didn’t just play beside me — you stood beside me.</div>
 </div>
 
 <div class="section fade">
 <img src="chirag4.jpg">
-<div class="wish">You valued me when I doubted myself. That changed me.</div>
+<div class="wish">When I doubted myself, you reminded me who I was.</div>
 </div>
 
 <div class="section fade">
 <img src="chirag5.jpg">
-<div class="wish">You pushed me to grow stronger — not just in games, but in life.</div>
+<div class="wish">7 years later — still my teammate. Still my brother.</div>
 </div>
 
 <div class="section fade">
 <img src="chirag6.jpg">
-<div class="wish">More than best friend. More than words. My brother forever. 👑</div>
+<div class="wish">Legends level up. Kings evolve. Today, you rise higher.</div>
 </div>
 
 <div class="final fade">
-<h2>💌 Always Proud of You</h2>
+<h2>Always My Brother</h2>
 <p>
-No matter where life takes us,  
-no matter how busy things get,  
-our bond stays unshaken.  
+From strangers on Discord to brothers in life,  
+we’ve grown, laughed, fought, won and survived together.  
 
-6–7 years and counting.  
-Still talking. Still laughing. Still playing.  
+No matter how life changes,  
+this bond stays unshaken.  
 
-Happy Birthday, my brother.  
-Stay legendary. 👑🔥
+Happy Birthday, Chirag.  
+Stay strong. Stay real. Stay legendary. 👑🔥
 </p>
 </div>
 
 <script>
-/* Fade on scroll */
+/* Fade scroll */
 const fades=document.querySelectorAll('.fade');
 window.addEventListener('scroll',()=>{
 fades.forEach(el=>{
