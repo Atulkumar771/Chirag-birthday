@@ -1,77 +1,61 @@
-
 <!DOCTYPE html>
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chirag Memories 📸</title>
+<title>Chirag 👑</title>
 
 <style>
-body {
-  margin: 0;
-  background: #111;
-  text-align: center;
-  color: white;
-  font-family: Arial;
+body{
+margin:0;
+background:#fff0f5;
+font-family:Arial;
+text-align:center;
 }
 
-img {
-  width: 80%;
-  max-width: 400px;
-  margin-top: 20px;
-  border-radius: 15px;
-  box-shadow: 0 0 20px #ff4d6d;
+h2{
+color:#c2185b;
+margin:20px;
 }
 
-button {
-  margin: 20px;
-  padding: 10px 20px;
-  border-radius: 10px;
-  border: none;
-  background: #00e5ff;
-  font-size: 16px;
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+gap:15px;
+padding:20px;
+}
+
+img{
+width:100%;
+border-radius:15px;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+button{
+margin:20px;
+padding:10px 20px;
+border:none;
+border-radius:20px;
+background:#ff4081;
+color:white;
 }
 </style>
 </head>
 <body>
 
-<h2>Our Memories 💙</h2>
+<h2>The Man. The Myth. The Brother. 👑</h2>
 
-<img id="photo" src="photo1.jpg">
+<div class="grid">
+<img src="chirag1.jpg">
+<img src="chirag2.jpg">
+<img src="chirag3.jpg">
+<img src="chirag4.jpg">
+<img src="chirag5.jpg">
+<img src="chirag6.jpg">
+</div>
 
-<br>
-<button onclick="prev()">⬅ Prev</button>
-<button onclick="next()">Next ➡</button>
-
-<br>
-<button onclick="goSecret()">Open Secret Message 💌</button>
-
-<script>
-const photos = [
-"chirag1.jpg",
-"chirag2.jpg",
-"chirag3.jpg",
-"chirag4.jpg",
-"chirag5.jpg",
-"chirag6.jpg"
-];
-
-let index = 0;
-const img = document.getElementById("photo");
-
-function next(){
-  index = (index+1)%photos.length;
-  img.src = photos[index];
-}
-
-function prev(){
-  index = (index-1+photos.length)%photos.length;
-  img.src = photos[index];
-}
-
-function goSecret(){
-  window.location.href="secret.html";
-}
-</script>
+<button onclick="window.location.href='secret.html'">
+Final Message 💌
+</button>
 
 </body>
 </html>
