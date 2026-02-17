@@ -1,1 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chirag Birthday Countdown</title>
 
+<style>
+body {
+  margin: 0;
+  background: black;
+  color: white;
+  font-family: Arial;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+#timer {
+  font-size: 32px;
+  margin-top: 20px;
+  color: #00e5ff;
+}
+
+.lock {
+  font-size: 24px;
+}
+</style>
+</head>
+<body>
+
+<div>
+  <div class="lock">🔒 Countdown Locked Until Midnight 🔒</div>
+  <div id="timer"></div>
+</div>
+
+<script>
+const targetDate = new Date("February 18, 2026 00:00:00").getTime();
+
+const timerEl = document.getElementById("timer");
+
+const interval = setInterval(() => {
+
+  const now = new Date().getTime();
+  const distance = targetDate - now;
+
+  if (distance <= 0) {
+    clearInterval(interval);
+    window.location.href = "celebration.html";
+  }
+
+  const hours = Math.floor((distance % (1000*60*60*24)) / (1000*60*60));
+  const minutes = Math.floor((distance % (1000*60*60)) / (1000*60));
+  const seconds = Math.floor((distance % (1000*60)) / 1000);
+
+  timerEl.innerHTML = hours + "h "
+                    + minutes + "m "
+                    + seconds + "s ";
+
+}, 1000);
+</script>
+
+</body>
+</html>
