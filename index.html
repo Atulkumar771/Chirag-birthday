@@ -2,70 +2,160 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chirag Turns 27 🎂</title>
+<title>Chirag Birthday Countdown 🎂</title>
 
 <style>
 body{
 margin:0;
-font-family:Arial;
-background:linear-gradient(135deg,#ffd1dc,#ffe6f0);
+height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
-height:100vh;
+flex-direction:column;
+background:linear-gradient(135deg,#ffe6f0,#ffd1dc);
+font-family:Arial;
 text-align:center;
+color:#c2185b;
 overflow:hidden;
 }
 
 .container{
 background:white;
-padding:40px;
-border-radius:20px;
-box-shadow:0 10px 30px rgba(0,0,0,0.1);
+padding:35px;
+border-radius:25px;
+box-shadow:0 15px 40px rgba(0,0,0,0.15);
+max-width:360px;
+animation:fadeIn 1.5s ease;
+}
+
+@keyframes fadeIn{
+from{opacity:0; transform:translateY(30px);}
+to{opacity:1; transform:translateY(0);}
 }
 
 h1{
-color:#c2185b;
+margin-bottom:20px;
 }
 
-#timer{
-font-size:40px;
-color:#ff4081;
-margin-top:15px;
+#countdown{
+font-size:22px;
+margin-top:10px;
+font-weight:bold;
+}
+
+#age{
+margin-top:20px;
+font-size:18px;
+color:#444;
+}
+
+.unlock{
+margin-top:25px;
+font-weight:bold;
+font-size:24px;
+color:#ff1493;
+opacity:0;
+transition:1.5s ease;
+}
+
+.sparkle{
+position:absolute;
+width:6px;
+height:6px;
+background:white;
+border-radius:50%;
+animation:sparkleFloat 4s linear infinite;
+opacity:0.7;
+}
+
+@keyframes sparkleFloat{
+0%{transform:translateY(0);opacity:1;}
+100%{transform:translateY(-100vh);opacity:0;}
 }
 </style>
 </head>
 <body>
 
 <div class="container">
-<h1>🎂 Chirag Turns 27 🎂</h1>
-<div id="timer"></div>
-<p>Unlocking at Midnight</p>
+<h1>🎂 Birthday Countdown 🎂</h1>
+
+<div id="countdown"></div>
+
+<div id="age"></div>
+
+<div class="unlock" id="unlockText">
+🎉 He is 27 Now! 🎉
+</div>
 </div>
 
 <script>
-const TEST_MODE = false; // change to false on birthday night
 
-const targetDate = new Date("February 18, 2026 00:00:00").getTime();
-const timerEl = document.getElementById("timer");
+// Birthday details
+const birthDate = new Date("February 18, 1999 00:00:00");
+const targetDate = new Date("February 18, 2026 00:00:00");
 
-const interval = setInterval(() => {
+const countdownEl = document.getElementById("countdown");
+const ageEl = document.getElementById("age");
+const unlockText = document.getElementById("unlockText");
 
-const now = new Date().getTime();
-const distance = targetDate - now;
-
-if(distance <= 0 || TEST_MODE){
-clearInterval(interval);
-window.location.href="celebration.html";
+// Sparkle effect
+for(let i=0;i<20;i++){
+let s=document.createElement("div");
+s.className="sparkle";
+s.style.left=Math.random()*100+"vw";
+s.style.top=Math.random()*100+"vh";
+s.style.animationDuration=(2+Math.random()*3)+"s";
+document.body.appendChild(s);
 }
 
-const hours = Math.floor((distance % (1000*60*60*24))/(1000*60*60));
-const minutes = Math.floor((distance % (1000*60*60))/(1000*60));
-const seconds = Math.floor((distance % (1000*60))/1000);
+function updateTimer(){
 
-timerEl.innerHTML = hours+"h : "+minutes+"m : "+seconds+"s";
+const now = new Date();
+const distance = targetDate - now;
 
-},1000);
+// If midnight reached
+if(distance <= 0){
+
+countdownEl.innerHTML = "00h 00m 00s";
+ageEl.innerHTML = "He is now <b>27 years old</b>";
+unlockText.style.opacity = "1";
+
+// Redirect after 4 seconds
+setTimeout(()=>{
+window.location.href="celebration.html";
+},4000);
+
+return;
+}
+
+// Countdown calculation
+const hours = Math.floor((distance % (1000*60*60*24)) / (1000*60*60));
+const minutes = Math.floor((distance % (1000*60*60)) / (1000*60));
+const seconds = Math.floor((distance % (1000*60)) / 1000);
+
+countdownEl.innerHTML =
+hours + "h " + minutes + "m " + seconds + "s";
+
+// Age calculation (current age before midnight)
+let ageYears = now.getFullYear() - birthDate.getFullYear();
+let ageMonth = now.getMonth() - birthDate.getMonth();
+let ageDay = now.getDate() - birthDate.getDate();
+
+if(ageDay < 0){
+ageMonth--;
+}
+if(ageMonth < 0){
+ageYears--;
+}
+
+ageEl.innerHTML =
+"He is currently <b>" + ageYears + "</b> years old";
+
+}
+
+setInterval(updateTimer,1000);
+updateTimer();
+
 </script>
 
 </body>
